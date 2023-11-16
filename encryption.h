@@ -1,0 +1,5 @@
+
+#ifndef VS_ENCRYPTION_H
+#define VS_ENCRYPTION_H
+
+#endif //VS_ENCRYPTION_H

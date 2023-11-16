@@ -1,0 +1,88 @@
+{
+ "Users": [
+  {
+   "Name": "Rasmus Hilmer",
+   "Age": 30,
+   "Gender": "Male",
+   "CPR": 308031234,
+   "Diagnosis1": "Astma",
+   "Medicine1": "Astma Medicin",
+   "Dosage1": "",
+   "Diagnosis2": "Høfeber",
+   "Medicine2": "Opatanol",
+   "Dosage2": ""
+  },
+  {
+   "Name": "Lasse Binderup",
+   "Age": 25,
+   "Gender": "Male",
+   "CPR": 304001234,
+   "Diagnosis1": "..",
+   "Medicine1": ",,",
+   "Dosage1": "",
+   "Diagnosis2": "??",
+   "Medicine2": "!!",
+   "Dosage2": ""
+  },
+  {
+   "Name": "Lasse Binderup",
+   "Age": 24,
+   "Gender": "Male",
+   "CPR": 304991234,
+   "Diagnosis1": "Høfeber",
+   "Medicine1": "Opatanol",
+   "Dosage1": "1 drop in each eye, morning and night",
+   "Diagnosis2": "Eksem",
+   "Medicine2": "??",
+   "Dosage2": ""
+  },
+  {
+   "Name": "Jakob Strøm",
+   "Age": 20,
+   "Gender": "Sigma",
+   "CPR": 1311991234,
+   "Diagnosis1": "??",
+   "Medicine1": "??",
+   "Dosage1": "",
+   "Diagnosis2": "??",
+   "Medicine2": "??",
+   "Dosage2": ""
+  },
+  {
+   "Name": "Mathias Larsen",
+   "CPR": 1411991234,
+   "Gender": "Ghoul",
+   "Age": 10000,
+   "Diagnosis1": "??",
+   "Medicine1": "??",
+   "Dosage1": "",
+   "Diagnosis2": "??",
+   "Medicine2": "??",
+   "Dosage2": ""
+  },
+  {
+   "Name": "Cecilie Lassen",
+   "CPR": 1511991234,
+   "Gender": "Ghoul",
+   "Age": 10000,
+   "Diagnosis1": "??",
+   "Medicine1": "??",
+   "Dosage1": "",
+   "Diagnosis2": "??",
+   "Medicine2": "??",
+   "Dosage2": ""
+  },
+  {
+   "Name": "Jonathan Pascu",
+   "CPR": 1611991234,
+   "Gender": "Ghoul",
+   "Age": 10000,
+   "Diagnosis1": "??",
+   "Medicine1": "??",
+   "Dosage1": "",
+   "Diagnosis2": "??",
+   "Medicine2": "??",
+   "Dosage2": ""
+  }
+ ]
+}
