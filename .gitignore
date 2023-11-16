@@ -14,7 +14,7 @@ build.ninja
 .ninja_log
 .ninja_deps
 .cmake
-VS
+Project_P1_Final
 main
 .DS_store
-cmake-build-debug/VS.cbp
+cmake-build-debug/Project_P1_Final.cbp
