@@ -47,6 +47,12 @@ void print_patient(const char *cpr_to_find) {
                 cJSON *dosage1 = cJSON_GetObjectItemCaseSensitive(patient, "Dosage1");
                 cJSON *medicine2 = cJSON_GetObjectItemCaseSensitive(patient, "Medicine2");
                 cJSON *dosage2 = cJSON_GetObjectItemCaseSensitive(patient, "Dosage2");
+                cJSON *medicine3 = cJSON_GetObjectItemCaseSensitive(patient, "Medicine3");
+                cJSON *dosage3 = cJSON_GetObjectItemCaseSensitive(patient, "Dosage3");
+                cJSON *medicine4 = cJSON_GetObjectItemCaseSensitive(patient, "Medicine4");
+                cJSON *dosage4 = cJSON_GetObjectItemCaseSensitive(patient, "Dosage4");
+                cJSON *medicine5 = cJSON_GetObjectItemCaseSensitive(patient, "Medicine5");
+                cJSON *dosage5 = cJSON_GetObjectItemCaseSensitive(patient, "Dosage5");
 
                 if (cJSON_IsString(name) && (name->valuestring != NULL)) {
                     printf("Name: %s\n", name->valuestring);
@@ -64,7 +70,7 @@ void print_patient(const char *cpr_to_find) {
                 }
 
                 if (cJSON_IsString(diagnosis) && (diagnosis->valuestring != NULL)) {
-                    printf("Diagnosis1: %s\n", diagnosis->valuestring);
+                    printf("Diagnosis: %s\n", diagnosis->valuestring);
                 }
 
                 if (cJSON_IsString(medicine1) && (medicine1->valuestring != NULL)) {
@@ -81,6 +87,30 @@ void print_patient(const char *cpr_to_find) {
 
                 if (cJSON_IsString(dosage2) && (dosage2->valuestring != NULL)) {
                     printf("Dosage2: %s\n", dosage2->valuestring);
+                }
+
+                if (cJSON_IsString(medicine3) && (medicine3->valuestring != NULL)) {
+                    printf("Medicine3: %s\n", medicine3->valuestring);
+                }
+
+                if (cJSON_IsString(dosage3) && (dosage3->valuestring != NULL)) {
+                    printf("Dosage3: %s\n", dosage3->valuestring);
+                }
+
+                if (cJSON_IsString(medicine4) && (medicine4->valuestring != NULL)) {
+                    printf("Medicine4: %s\n", medicine4->valuestring);
+                }
+
+                if (cJSON_IsString(dosage4) && (dosage4->valuestring != NULL)) {
+                    printf("Dosage4: %s\n", dosage4->valuestring);
+                }
+
+                if (cJSON_IsString(medicine5) && (medicine5->valuestring != NULL)) {
+                    printf("Medicine5: %s\n", medicine5->valuestring);
+                }
+
+                if (cJSON_IsString(dosage5) && (dosage5->valuestring != NULL)) {
+                    printf("Dosage5: %s\n", dosage5->valuestring);
                 }
                 break;  // Exit the loop once the desired "CPR" is found
             }
@@ -110,7 +140,9 @@ void print_patient(const char *cpr_to_find) {
         //Switch case på valg fra tidligere. Hvis Y spørger den om CPR, ellers N.
         switch(valg) {
             case 'Y':
-                printf("\n");
+                for(int t = 0; t < 8; t++) {
+                    printf("\n");
+                }
                 EnterCPR(CPRnr);
                 break;
             case 'N':
