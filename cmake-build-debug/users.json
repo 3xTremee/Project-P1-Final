@@ -16,7 +16,7 @@
    "Age": 25,
    "Gender": "Male",
    "CPR": 304001234,
-   "Diagnosis": "Asthma, Rash, Hay fever",
+   "Diagnosis": "Asthma, Rash, Hay fever, ADHD",
    "Medicine1": "Berodual",
    "Dosage1": "1 inhalation as required",
    "Medicine2": "Mildison Lipid creme",
@@ -25,8 +25,8 @@
    "Dosage3": "1 drop in each eye morning and night",
    "Medicine4": "Alnok",
    "Dosage4": "1 pill each morning",
-   "Medicine5": "!!",
-   "Dosage5": ""
+   "Medicine5": "Ritalin",
+   "Dosage5": "2 time a day"
   },
   {
    "Name": "Lasse Binderup",
