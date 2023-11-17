@@ -29,3 +29,34 @@ void timestamp_administration() {
     }
 
 }
+
+/* Mulig løsning
+ * // Your existing JSON array as a string
+    const char *existingJsonArray = "[\"value1\", \"value2\", \"value3\"]";
+
+    // Parse the existing JSON array
+    cJSON *jsonArray = cJSON_Parse(existingJsonArray);
+    if (jsonArray == NULL) {
+        fprintf(stderr, "Failed to parse existing JSON array\n");
+        return 1;
+    }
+
+    // Create a cJSON string with the desired value (timestamp)
+    time_t t;
+    time(&t);
+    char adm[100];
+    sprintf(adm, "Time of administration: %s", ctime(&t));
+
+    cJSON *jsonString = cJSON_CreateString(adm);
+
+    // Add the cJSON string to the end of the existing cJSON array
+    cJSON_AddItemToArray(jsonArray, jsonString);
+
+    // Print the updated cJSON array to stdout
+    char *updatedJsonArray = cJSON_Print(jsonArray);
+    printf("%s\n", updatedJsonArray);
+
+    // Don't forget to free the cJSON objects
+    cJSON_free(updatedJsonArray);
+    cJSON_Delete(jsonArray);
+    */
