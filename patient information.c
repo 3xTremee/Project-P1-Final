@@ -37,7 +37,7 @@ void print_patient(const char *cpr_to_find) {
             cJSON *cpr = cJSON_GetObjectItemCaseSensitive(patient, "CPR");
 
 
-            //atoi funktionen converter vores array of chars (String) til en int
+            //atof funktionen converter vores array of chars (String) til en float
             if (cJSON_IsNumber(cpr) && (cpr->valuedouble == atof(cpr_to_find))) {
                 cJSON *name = cJSON_GetObjectItemCaseSensitive(patient, "Name");
                 cJSON *age = cJSON_GetObjectItemCaseSensitive(patient, "Age");
@@ -85,7 +85,7 @@ void print_patient(const char *cpr_to_find) {
                 }
 
                 if (cJSON_IsString(dosage2) && (dosage2->valuestring != NULL)) {
-                    printf("Dosage1: %s\n", dosage2->valuestring);
+                    printf("Dosage2: %s\n", dosage2->valuestring);
                 }
                 break;  // Exit the loop once the desired "CPR" is found
             }
