@@ -1,4 +1,6 @@
-#ifndef PROJECT_P1_FINAL_TIMESTAMP_H
-#define PROJECT_P1_FINAL_TIMESTAMP_H
-
-#endif //PROJECT_P1_FINAL_TIMESTAMP_H
+#include <stdlib.h>
+#include <stdio.h>
+#include "cJSON.h"
+#include <string.h>
+#include <ctype.h>
+#include <time.h>
