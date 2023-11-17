@@ -9,7 +9,7 @@ CJSON_PUBLIC(cJSON_bool) cJSON_AddItemToArray(cJSON *array, cJSON *item)
 
 */
 
-void timestamp_administration() {
+/*void timestamp_administration() {
 
     char choice;
     printf("Has the medicine been administered?\n\nType 'Y' for yes or 'N' no \n>");
@@ -23,12 +23,12 @@ void timestamp_administration() {
         time(&t);
         char adm[100];
         sprintf(adm, "Time of administration: %s", ctime(&t));
+*/
+        //cJSON_AddItemToArray( , adm) /* Hvordan får jeg fat i det rigtige cjson array*/
 
-        cJSON_AddItemToArray( , adm) /* Hvordan får jeg fat i det rigtige cjson array*/
+    //}
 
-    }
-
-}
+//}
 
 /* Mulig løsning
  * // Your existing JSON array as a string
