@@ -37,7 +37,7 @@ void print_patient(const char *cpr_to_find) {
 
 
             //atoi funktionen converter vores array of chars (String) til en int
-            if (cJSON_IsNumber(cpr) && (cpr->valueint == atof(cpr_to_find))) {
+            if (cJSON_IsNumber(cpr) && (cpr->valuedouble == atof(cpr_to_find))) {
                 cJSON *name = cJSON_GetObjectItemCaseSensitive(patient, "Name");
                 cJSON *age = cJSON_GetObjectItemCaseSensitive(patient, "Age");
                 cJSON *gender = cJSON_GetObjectItemCaseSensitive(patient, "Gender");
