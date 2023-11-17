@@ -156,7 +156,7 @@ void print_patient(const char *cpr_to_find) {
                 break;
         //If user types something that is not 'Y' or 'N', runs an error message
             default:
-                printf("You have not chosen a valid option, please choose 'Y' or 'N'.\n");
+                printf("You have not chosen a valid option. Please choose 'Y' or 'N'.\n");
         }
         //Because it is in a do while function, if it was not broken (runs case 'Y' or 'N')
         // , the while is still true and runs again
