@@ -110,11 +110,13 @@ void print_patient(const char *cpr_to_find) {
         //Switch case på valg fra tidligere. Hvis Y spørger den om CPR, ellers N.
         switch(valg) {
             case 'Y':
+                printf("\n");
                 EnterCPR(CPRnr);
                 break;
             case 'N':
                 printf("Du bliver nu logget ud \n");
                 login();
+                EnterCPR();
                 break;
             default:
                 printf("Du har hverken valgt ja eller nej. Prøv igen, men vælg 'Y' eller 'N'.\n");
