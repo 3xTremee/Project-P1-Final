@@ -128,6 +128,9 @@ void print_patient(const char *cpr_to_find) {
         printf("Error: 'Users' is not an array in the JSON.\n");
     }
 
+    for(int t = 0; t < 2; t++) {
+        printf("\n");
+    }
     char valg;
     printf("Do you want to find a new person or log out?\nType 'Y' for yes or 'N' for log out\n>");
 

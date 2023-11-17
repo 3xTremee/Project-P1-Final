@@ -33,11 +33,11 @@
    "Age": 24,
    "Gender": "Male",
    "CPR": 304991234,
-   "Diagnosis": "Høfeber, Eksem",
+   "Diagnosis": "Høfeber, Type 1 diabetes",
    "Medicine1": "Opatanol",
    "Dosage1": "1 drop in each eye, morning and night",
-   "Medicine2": "??",
-   "Dosage2": ""
+   "Medicine2": "Insulin",
+   "Dosage2": "4 injections a day. More if needed. Check blood sugar levels."
   },
   {
    "Name": "Jakob Strøm",
