@@ -37,7 +37,7 @@ void print_patient(const char *cpr_to_find) {
             cJSON *cpr = cJSON_GetObjectItemCaseSensitive(patient, "CPR");
 
 
-            //atof funktionen converter vores array of chars (String) til en float
+            //The atof funktion converts the array of chars (String) into a float
             if (cJSON_IsNumber(cpr) && (cpr->valuedouble == atof(cpr_to_find))) {
                 cJSON *name = cJSON_GetObjectItemCaseSensitive(patient, "Name");
                 cJSON *age = cJSON_GetObjectItemCaseSensitive(patient, "Age");
@@ -117,14 +117,13 @@ void print_patient(const char *cpr_to_find) {
 
         }
         //If the CPR number does not have information to print, the program prompts the user to reenter CPR.number
+        // so we can insert an error message and run EnterCPR again
         if (HasPrinted == 0) {
-            //If the loop has not been broken that means that the CPR number is not in the json file
-            // so we can insert an error message and run EnterCPR again
             printf("CPR-number not in system\n");
             EnterCPR();
         }
     } else {
-        //Hvis der ikke er en "Users" i JSON filen printer den det her.
+        //If no "Users" is found in the JSON file, prints error message.
         printf("Error: 'Users' is not an array in the JSON.\n");
     }
 
@@ -135,12 +134,13 @@ void print_patient(const char *cpr_to_find) {
     printf("Do you want to find a new person or log out?\nType 'Y' for yes or 'N' for log out\n>");
 
     do {
-        //Kode som tjekker om valg er Y eller N og derefter kører switch casen.
+        //Scans the user input based on the previous printed message and acts on the input in the switch case,
+        // either continuing to the next patient (Y) or log out (N)
         scanf(" %c", &valg);
         valg = toupper(valg);
         char CPRnr[11];
 
-        //Switch case på valg fra tidligere. Hvis Y spørger den om CPR, ellers N.
+        //Switch case, if input is Y, it runs EnterCPR
         switch(valg) {
             case 'Y':
                 for(int t = 0; t < 8; t++) {
@@ -148,14 +148,18 @@ void print_patient(const char *cpr_to_find) {
                 }
                 EnterCPR(CPRnr);
                 break;
+        //, if N moves user to log-in screen and forward to EnterCPR when user has logged in again succesfully
             case 'N':
-                printf("Du bliver nu logget ud \n");
+                printf("You are being logged out \n");
                 login();
                 EnterCPR();
                 break;
+        //If user types something that is not 'Y' or 'N', runs an error message
             default:
-                printf("Du har hverken valgt ja eller nej. Prøv igen, men vælg 'Y' eller 'N'.\n");
+                printf("You have not chosen a valid option, please choose 'Y' or 'N'.\n");
         }
+        //Because it is in a do while function, if it was not broken (runs case 'Y' or 'N')
+        // , the while is still true and runs again
     } while(valg != 'Y' && valg != 'N');
 
     // Delete the JSON object
