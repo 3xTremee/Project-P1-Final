@@ -42,10 +42,9 @@ void print_patient(const char *cpr_to_find) {
                 cJSON *name = cJSON_GetObjectItemCaseSensitive(patient, "Name");
                 cJSON *age = cJSON_GetObjectItemCaseSensitive(patient, "Age");
                 cJSON *gender = cJSON_GetObjectItemCaseSensitive(patient, "Gender");
-                cJSON *diagnosis1 = cJSON_GetObjectItemCaseSensitive(patient, "Diagnosis1");
+                cJSON *diagnosis = cJSON_GetObjectItemCaseSensitive(patient, "Diagnosis");
                 cJSON *medicine1 = cJSON_GetObjectItemCaseSensitive(patient, "Medicine1");
                 cJSON *dosage1 = cJSON_GetObjectItemCaseSensitive(patient, "Dosage1");
-                cJSON *diagnosis2 = cJSON_GetObjectItemCaseSensitive(patient, "Diagnosis2");
                 cJSON *medicine2 = cJSON_GetObjectItemCaseSensitive(patient, "Medicine2");
                 cJSON *dosage2 = cJSON_GetObjectItemCaseSensitive(patient, "Dosage2");
 
@@ -64,8 +63,8 @@ void print_patient(const char *cpr_to_find) {
                     printf("Gender: %s\n", gender->valuestring);
                 }
 
-                if (cJSON_IsString(diagnosis1) && (diagnosis1->valuestring != NULL)) {
-                    printf("Diagnosis1: %s\n", diagnosis1->valuestring);
+                if (cJSON_IsString(diagnosis) && (diagnosis->valuestring != NULL)) {
+                    printf("Diagnosis1: %s\n", diagnosis->valuestring);
                 }
 
                 if (cJSON_IsString(medicine1) && (medicine1->valuestring != NULL)) {
@@ -74,10 +73,6 @@ void print_patient(const char *cpr_to_find) {
 
                 if (cJSON_IsString(dosage1) && (dosage1->valuestring != NULL)) {
                     printf("Dosage1: %s\n", dosage1->valuestring);
-                }
-
-                if (cJSON_IsString(diagnosis2) && (diagnosis2->valuestring != NULL)) {
-                    printf("Diagnosis2: %s\n", diagnosis2->valuestring);
                 }
 
                 if (cJSON_IsString(medicine2) && (medicine2->valuestring != NULL)) {
