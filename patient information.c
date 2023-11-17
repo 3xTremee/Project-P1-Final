@@ -12,7 +12,7 @@ void print_patient(const char *cpr_to_find) {
     }
 
     // This code reads the contents of the opened file into a character buffer named buffer.
-    char buffer[2048];
+    char buffer[3048];
     int len = fread(buffer, 1, sizeof(buffer), fp);
     fclose(fp);
 
