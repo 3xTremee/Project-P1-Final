@@ -31,6 +31,7 @@ void print_patient(const char *cpr_to_find) {
     // Find the JSON object with the specified "CPR"
     cJSON *users = cJSON_GetObjectItemCaseSensitive(json, "Users");
     if (cJSON_IsArray(users)) {
+        bool HasPrinted = 0;
         for (int i = 0; i < cJSON_GetArraySize(users); i++) {
             cJSON *patient = cJSON_GetArrayItem(users, i);
             cJSON *cpr = cJSON_GetObjectItemCaseSensitive(patient, "CPR");
@@ -49,6 +50,9 @@ void print_patient(const char *cpr_to_find) {
 
                 if (cJSON_IsString(name) && (name->valuestring != NULL)) {
                     printf("Name: %s\n", name->valuestring);
+                    //If the CPR number has an assosiated name (as in it has information) the program prints data
+                    // and sets the bool to TRUE to reflect that
+                    HasPrinted = 1;
                 }
 
                 if (cJSON_IsNumber(age)) {
@@ -83,10 +87,13 @@ void print_patient(const char *cpr_to_find) {
             }
 
         }
-        //If the loop has not been broken that means that the CPR number is not in the json file
-        // so we can insert an error message and run EnterCPR again
-        printf("CPR-number not in system\n");
-        EnterCPR();
+        //If the CPR number does not have information to print, the program prompts the user to reenter CPR.number
+        if (HasPrinted == 0) {
+            //If the loop has not been broken that means that the CPR number is not in the json file
+            // so we can insert an error message and run EnterCPR again
+            printf("CPR-number not in system\n");
+            EnterCPR();
+        }
     } else {
         //Hvis der ikke er en "Users" i JSON filen printer den det her.
         printf("Error: 'Users' is not an array in the JSON.\n");
