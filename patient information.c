@@ -161,19 +161,18 @@ void print_patient(const char *cpr_to_find) {
     for(int t = 0; t < 2; t++) {
         printf("\n");
     }
-    char valg;
-    printf("Do you want to find a new person or log out?\nType 'Y' for yes or 'N' for log out\n>");
+    int valg;
+    printf("Do you want to find a new person or log out?\nType 1 for new person or 2 for log out\n>");
 
     do {
         //Scans the user input based on the previous printed message and acts on the input in the switch case,
         // either continuing to the next patient (Y) or log out (N)
-        scanf(" %c", &valg);
-        valg = toupper(valg);
+        scanf(" %d", &valg);
         char CPRnr[11];
 
         //Switch case, if input is Y, it runs EnterCPR
         switch(valg) {
-            case 'Y':
+            case 1:
                 //Makes free lines between the previous and the current patient information.
                 for(int t = 0; t < 8; t++) {
                     printf("\n");
@@ -181,18 +180,18 @@ void print_patient(const char *cpr_to_find) {
                 EnterCPR(CPRnr);
                 break;
         //, if N moves user to log-in screen and forward to EnterCPR when user has logged in again succesfully
-            case 'N':
+            case 2:
                 printf("You are being logged out \n");
                 login();
                 EnterCPR();
                 break;
         //If user types something that is not 'Y' or 'N', runs an error message
             default:
-                printf("You have not chosen a valid option. Please choose 'Y' or 'N'.\n");
+                printf("You have not chosen a valid option. Please choose 1 or 2.\n");
         }
         //Because it is in a do while function, if it was not broken (runs case 'Y' or 'N')
         // , the while is still true and runs again
-    } while(valg != 'Y' && valg != 'N');
+    } while(valg != 1 && valg != 2);
 
     // Delete the JSON object
     cJSON_Delete(json);
