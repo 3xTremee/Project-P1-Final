@@ -43,23 +43,33 @@ void addTimestampToField(cJSON *userObject, const char *fieldName) {
 */
     }}
 /*
+
+\\ Skal muligvis være en anden funktion som bruger timestamp funktionen, ellers skal variablerne være en del af main
+
 int main() {
+    \\ Output og input fil skal umiddelbart være den samme for at kunne opdatere
     const char *inputFilePath = "users.json";
     const char *outputFilePath = "users..json";
+    \\ Vi skal finde en måde hvorpå brugeren skal markere hvilken medicin, ellers skal det opdateres automatisk
+    \\ User index kigger på hvilken person der er tale om
     const int targetUserIndex = 0;  // Choose the user index you want to modify
+    \\ Target field er hvilket felt som vi ønsker at adde timestamp til
     const char *targetFieldName = "Medicine1";  // Choose the field you want to modify
 
-    // Read the existing JSON from the file
+
+    // Læser user filen og lægger det i en fil variabel
     FILE *file = fopen(inputFilePath, "r");
     if (file == NULL) {
         perror("Error opening file");
         return 1;
     }
 
+    \\ Kigger på hvor stor filen er
     fseek(file, 0, SEEK_END);
     long fileSize = ftell(file);
     rewind(file);
 
+    \\ Allkokerer plads til stringen
     char *jsonString = (char *)malloc(fileSize + 1);
     if (jsonString == NULL) {
         perror("Error allocating memory");
