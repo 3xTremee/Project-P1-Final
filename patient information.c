@@ -196,4 +196,6 @@ void print_patient(const char *cpr_to_find) {
 
     // Delete the JSON object
     cJSON_Delete(json);
+    //Closes the file we opened in the beginning
+    fclose(fp);
 }
