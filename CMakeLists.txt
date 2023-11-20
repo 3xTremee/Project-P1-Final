@@ -19,4 +19,6 @@ add_executable(Project_P1_Final
         cJSON.h
         timestamp.c
         timestamp.h
+        "write patient note.c"
+        "write patient note.h"
 )
