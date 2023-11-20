@@ -166,11 +166,11 @@ void print_patient(const char *cpr_to_find) {
 
     do {
         //Scans the user input based on the previous printed message and acts on the input in the switch case,
-        // either continuing to the next patient (Y) or log out (N)
+        // either continuing to the next patient 1 or log out 2
         scanf(" %d", &valg);
         char CPRnr[11];
 
-        //Switch case, if input is Y, it runs EnterCPR
+        //Switch case, if input is 1, it runs EnterCPR
         switch(valg) {
             case 1:
                 //Makes free lines between the previous and the current patient information.
@@ -179,17 +179,17 @@ void print_patient(const char *cpr_to_find) {
                 }
                 EnterCPR(CPRnr);
                 break;
-        //, if N moves user to log-in screen and forward to EnterCPR when user has logged in again succesfully
+        //, if 2 moves user to log-in screen and forward to EnterCPR when user has logged in again succesfully
             case 2:
                 printf("You are being logged out \n");
                 login();
                 EnterCPR();
                 break;
-        //If user types something that is not 'Y' or 'N', runs an error message
+        //If user types something that is not 1 or 2, runs an error message
             default:
                 printf("You have not chosen a valid option. Please choose 1 or 2.\n");
         }
-        //Because it is in a do while function, if it was not broken (runs case 'Y' or 'N')
+        //Because it is in a do while function, if it was not broken (runs case 1 or 2)
         // , the while is still true and runs again
     } while(valg != 1 && valg != 2);
 
