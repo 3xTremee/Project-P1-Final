@@ -157,6 +157,7 @@ void print_patient(const char *cpr_to_find) {
         printf("Error: 'Users' is not an array in the JSON.\n");
     }
 
+    //Makes a space between the patients printed info and the printf below.
     for(int t = 0; t < 2; t++) {
         printf("\n");
     }
@@ -173,6 +174,7 @@ void print_patient(const char *cpr_to_find) {
         //Switch case, if input is Y, it runs EnterCPR
         switch(valg) {
             case 'Y':
+                //Makes free lines between the previous and the current patient information.
                 for(int t = 0; t < 8; t++) {
                     printf("\n");
                 }
