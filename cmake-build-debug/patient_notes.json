@@ -2,6 +2,11 @@
   "Patients": [
     {
       "CPR": 308031234,
+      "note": "REAL NOTE :tm:"
+    },
+    {
+      "CPR": 304991234,
+      "note": "ANOTHER REAL NOT :tm:"
     }
 ]
 }

@@ -1,9 +1,14 @@
 #include "write patient note.h"
 
 void write_note(){
-    /*
-    char *PatientCPR = "308031234";
-    FILE *fp = fopen("patient_notes.json", "r");
+    char *PatientCPR = "308031234";//temp
+
+    //Scan patient note
+    char PatientNote[100];
+    printf("Please type error or note:\n");
+    scanf("%s\n", PatientNote);
+
+    FILE *fp = fopen("patient_notes.json", "r+");
     if (fp == NULL) {
         printf("Error: Unable to open the file.\n");
         return;
@@ -12,7 +17,6 @@ void write_note(){
     // This code reads the contents of the opened file into a character buffer named buffer.
     char buffer[3048];
     int len = fread(buffer, 1, sizeof(buffer), fp);
-    fclose(fp);
 
     //Extracts the array from the parsed JSON data
     cJSON *json = cJSON_Parse(buffer);
@@ -38,6 +42,7 @@ void write_note(){
             //The atof funktion converts the array of chars (String) into a float
             if (cJSON_IsNumber(cpr) && (cpr->valuedouble == atof(PatientCPR))) {
                 cJSON *cpr = cJSON_GetObjectItemCaseSensitive(patients, "cpr");
+                cJSON *note = cJSON_GetObjectItemCaseSensitive(patients, "note");
 
                 if (cJSON_IsNumber(cpr) && (patients->valuestring != NULL)) {
                     PatientInFile = 1;
@@ -49,10 +54,7 @@ void write_note(){
         printf("Error: 'Patients' is not an array in the JSON.\n");
     }
 
-    //Scan patient note
-    char PatientNote[100];
-    printf("Please type error or note:\n");
-    scanf("%s\n", PatientNote);*/
+
 
     //Open JSON file in 'W' ?? eller skal den åbnes efter of skrive "buffer" til den? det skal den nok...
 
@@ -67,5 +69,7 @@ void write_note(){
     //item = current time
     //string = scanned note
     //object = PatientCPR
+
+    //fclose(fp);
 }
 
