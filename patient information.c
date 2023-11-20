@@ -152,6 +152,7 @@ void print_patient(const char *cpr_to_find) {
             printf("CPR-number not in system\n");
             EnterCPR();
         }
+        
     } else {
         //If no "Users" is found in the JSON file, prints error message.
         printf("Error: 'Users' is not an array in the JSON.\n");
