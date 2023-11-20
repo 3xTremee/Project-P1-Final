@@ -44,17 +44,23 @@
    "Age": 20,
    "Gender": "Sigma",
    "CPR": 1311991234,
-   "Diagnosis": "..",
-   "Medicine1": ",,",
-   "Dosage1": "",
-   "Medicine2": "!!",
-   "Dosage2": "",
-   "Medicine3": "!!",
-   "Dosage3": "",
+   "Diagnosis": "Arthritis, High cholesterol, Heart failure",
+   "Medicine1": "Ibuprofen",
+   "Dosage1": "2 pills with 4-6 hours intervals",
+   "Medicine2": "Atorvastatin",
+   "Dosage2": "30mg a day. If needed, maximum 80mg a day",
+   "Medicine3": "Edoxaban",
+   "Dosage3": "60mg a day. Twice a day",
    "Medicine4": "!!",
    "Dosage4": "",
    "Medicine5": "!!",
-   "Dosage5": ""
+   "Dosage5": "",
+   "Medicine6": "!!",
+   "Dosage6": "",
+   "Medicine7": "!!",
+   "Dosage7": "",
+   "Medicine8": "!!",
+   "Dosage8": ""
   },
   {
    "Name": "Mathias Larsen",
@@ -63,15 +69,7 @@
    "Age": 10000,
    "Diagnosis": "..",
    "Medicine1": ",,",
-   "Dosage1": "",
-   "Medicine2": "!!",
-   "Dosage2": "",
-   "Medicine3": "!!",
-   "Dosage3": "",
-   "Medicine4": "!!",
-   "Dosage4": "",
-   "Medicine5": "!!",
-   "Dosage5": ""
+   "Dosage1": ""
   },
   {
    "Name": "Cecilie Lassen",
@@ -95,11 +93,7 @@
    "Medicine2": "!!",
    "Dosage2": "",
    "Medicine3": "!!",
-   "Dosage3": "",
-   "Medicine4": "!!",
-   "Dosage4": "",
-   "Medicine5": "!!",
-   "Dosage5": ""
+   "Dosage3": ""
   }
  ]
 }

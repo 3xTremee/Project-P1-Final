@@ -53,6 +53,12 @@ void print_patient(const char *cpr_to_find) {
                 cJSON *dosage4 = cJSON_GetObjectItemCaseSensitive(patient, "Dosage4");
                 cJSON *medicine5 = cJSON_GetObjectItemCaseSensitive(patient, "Medicine5");
                 cJSON *dosage5 = cJSON_GetObjectItemCaseSensitive(patient, "Dosage5");
+                cJSON *medicine6 = cJSON_GetObjectItemCaseSensitive(patient, "Medicine6");
+                cJSON *dosage6 = cJSON_GetObjectItemCaseSensitive(patient, "Dosage6");
+                cJSON *medicine7 = cJSON_GetObjectItemCaseSensitive(patient, "Medicine7");
+                cJSON *dosage7 = cJSON_GetObjectItemCaseSensitive(patient, "Dosage7");
+                cJSON *medicine8 = cJSON_GetObjectItemCaseSensitive(patient, "Medicine8");
+                cJSON *dosage8 = cJSON_GetObjectItemCaseSensitive(patient, "Dosage8");
 
                 if (cJSON_IsString(name) && (name->valuestring != NULL)) {
                     printf("Name: %s\n", name->valuestring);
@@ -111,6 +117,30 @@ void print_patient(const char *cpr_to_find) {
 
                 if (cJSON_IsString(dosage5) && (dosage5->valuestring != NULL)) {
                     printf("Dosage5: %s\n", dosage5->valuestring);
+                }
+
+                if (cJSON_IsString(medicine6) && (medicine6->valuestring != NULL)) {
+                    printf("Medicine6: %s\n", medicine6->valuestring);
+                }
+
+                if (cJSON_IsString(dosage6) && (dosage6->valuestring != NULL)) {
+                    printf("Dosage6: %s\n", dosage6->valuestring);
+                }
+
+                if (cJSON_IsString(medicine7) && (medicine7->valuestring != NULL)) {
+                    printf("Medicine7: %s\n", medicine7->valuestring);
+                }
+
+                if (cJSON_IsString(dosage7) && (dosage7->valuestring != NULL)) {
+                    printf("Dosage7: %s\n", dosage7->valuestring);
+                }
+
+                if (cJSON_IsString(medicine8) && (medicine8->valuestring != NULL)) {
+                    printf("Medicine8: %s\n", medicine8->valuestring);
+                }
+
+                if (cJSON_IsString(dosage8) && (dosage8->valuestring != NULL)) {
+                    printf("Dosage8: %s\n", dosage8->valuestring);
                 }
                 break;  // Exit the loop once the desired "CPR" is found
             }
