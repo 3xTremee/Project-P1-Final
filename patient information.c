@@ -1,6 +1,7 @@
 #include "patient information.h"
 #include "login.h"
 #include "cpr.h"
+#include "timestamp.h"
 
 void print_patient(const char *cpr_to_find) {
     // This code attempts to open the file "users.json" for reading.
@@ -159,6 +160,23 @@ void print_patient(const char *cpr_to_find) {
                 if (cJSON_IsString(dosage8) && (dosage8->valuestring != NULL)) {
                     printf("Dosage8: %s\n", dosage8->valuestring);
                 }
+
+                char field [100];
+                printf("\nWhat medicine have you administered\nMedicine[1-n]\n>");
+                scanf("%s", field);
+
+                addTimestampToField(patient, field);
+
+                FILE *outputFile = fopen("users.json", "w");
+
+                char *updatedJsonText = cJSON_Print(json);
+                fprintf(outputFile, "%s", updatedJsonText);
+                fclose(outputFile);
+
+                // Don't forget to free the cJSON objects and allocated memory
+                cJSON_Delete(patient);
+                free(updatedJsonText);
+
                 break;  // Exit the loop once the desired "CPR" is found
             }
 
@@ -197,13 +215,13 @@ void print_patient(const char *cpr_to_find) {
                 }
                 EnterCPR();
                 break;
-        //, if 2 moves user to log-in screen and forward to EnterCPR when user has logged in again succesfully
+                //, if 2 moves user to log-in screen and forward to EnterCPR when user has logged in again succesfully
             case 2:
                 printf("You are being logged out \n");
                 login();
                 EnterCPR();
                 break;
-        //If user types something that is not 1 or 2, runs an error message
+                //If user types something that is not 1 or 2, runs an error message
             default:
                 printf("You have not chosen a valid option. Please choose 1 or 2.\n");
         }
