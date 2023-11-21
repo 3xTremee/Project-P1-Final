@@ -10,7 +10,7 @@ void write_note(const char *PatientCPR){
     //To allow the user to write sentences the program scans for %[^\n] which means that it scans for input until it records 'Enter'
     scanf(" %[^\n]", PatientNote);
 
-    //Get timestamp (seperated for simplicity)
+    //Get timestamp (using top-down to make write_note() clearer)
     char *timestamp = getTimestamp();
 
     //Creates new object to write in
