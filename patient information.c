@@ -11,10 +11,28 @@ void print_patient(const char *cpr_to_find) {
         return;
     }
 
-    // This code reads the contents of the opened file into a character buffer named buffer.
-    char buffer[3048];
-    int len = fread(buffer, 1, sizeof(buffer), fp);
+    // Move the file pointer to the end of the file
+    fseek(fp, 0, SEEK_END);
+
+    // Get the size of the file
+    long file_size = ftell(fp);
+
+    // Move the file pointer back to the beginning of the file
+    fseek(fp, 0, SEEK_SET);
+
+    // Dynamically allocate the buffer based on the file size
+    char *buffer = (char *)malloc(file_size + 1);
+    if (buffer == NULL) {
+        printf("Error: Unable to allocate memory.\n");
+        fclose(fp);
+        return;
+    }
+
+    // Read the contents of the file into the buffer
+    size_t len = fread(buffer, 1, file_size, fp);
+    buffer[len] = '\0'; // Null-terminate the buffer
     fclose(fp);
+    free(buffer);
 
     // This part of the code extracts the "Users" array from the parsed JSON data.
     // If "Users" is an array, it proceeds to iterate through its elements using a for loop.
