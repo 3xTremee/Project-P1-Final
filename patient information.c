@@ -1,6 +1,7 @@
 #include "patient information.h"
 #include "login.h"
 #include "cpr.h"
+#include "timestamp.h"
 
 void print_patient(const char *cpr_to_find) {
     // This code attempts to open the file "users.json" for reading.
@@ -11,9 +12,26 @@ void print_patient(const char *cpr_to_find) {
         return;
     }
 
-    // This code reads the contents of the opened file into a character buffer named buffer.
-    char buffer[3048];
-    int len = fread(buffer, 1, sizeof(buffer), fp);
+    // Move the file pointer to the end of the file
+    fseek(fp, 0, SEEK_END);
+
+    // Get the size of the file
+    long file_size = ftell(fp);
+
+    // Move the file pointer back to the beginning of the file
+    fseek(fp, 0, SEEK_SET);
+
+    // Dynamically allocate the buffer based on the file size
+    char *buffer = (char *)malloc(file_size + 1);
+    if (buffer == NULL) {
+        printf("Error: Unable to allocate memory.\n");
+        fclose(fp);
+        return;
+    }
+
+    // Read the contents of the file into the buffer
+    size_t len = fread(buffer, 1, file_size, fp);
+    buffer[len] = '\0'; // Null-terminate the buffer
     fclose(fp);
 
     // This part of the code extracts the "Users" array from the parsed JSON data.
@@ -142,6 +160,23 @@ void print_patient(const char *cpr_to_find) {
                 if (cJSON_IsString(dosage8) && (dosage8->valuestring != NULL)) {
                     printf("Dosage8: %s\n", dosage8->valuestring);
                 }
+
+                char field [100];
+                printf("\nWhat medicine have you administered\nMedicine[1-n]\n>");
+                scanf("%s", field);
+
+                addTimestampToField(patient, field);
+
+                FILE *outputFile = fopen("users.json", "w");
+
+                char *updatedJsonText = cJSON_Print(json);
+                fprintf(outputFile, "%s", updatedJsonText);
+                fclose(outputFile);
+
+                // Don't forget to free the cJSON objects and allocated memory
+                cJSON_Delete(patient);
+                free(updatedJsonText);
+
                 break;  // Exit the loop once the desired "CPR" is found
             }
 
@@ -152,7 +187,7 @@ void print_patient(const char *cpr_to_find) {
             printf("CPR-number not in system\n");
             EnterCPR();
         }
-        
+
     } else {
         //If no "Users" is found in the JSON file, prints error message.
         printf("Error: 'Users' is not an array in the JSON.\n");
@@ -178,15 +213,15 @@ void print_patient(const char *cpr_to_find) {
                 for(int t = 0; t < 8; t++) {
                     printf("\n");
                 }
-                EnterCPR(CPRnr);
+                EnterCPR();
                 break;
-        //, if 2 moves user to log-in screen and forward to EnterCPR when user has logged in again succesfully
+                //, if 2 moves user to log-in screen and forward to EnterCPR when user has logged in again succesfully
             case 2:
                 printf("You are being logged out \n");
                 login();
                 EnterCPR();
                 break;
-        //If user types something that is not 1 or 2, runs an error message
+                //If user types something that is not 1 or 2, runs an error message
             default:
                 printf("You have not chosen a valid option. Please choose 1 or 2.\n");
         }
@@ -196,4 +231,7 @@ void print_patient(const char *cpr_to_find) {
 
     // Delete the JSON object
     cJSON_Delete(json);
+
+    //Free the memory for the buffer
+    free(buffer);
 }
