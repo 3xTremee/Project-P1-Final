@@ -32,7 +32,6 @@ void print_patient(const char *cpr_to_find) {
     size_t len = fread(buffer, 1, file_size, fp);
     buffer[len] = '\0'; // Null-terminate the buffer
     fclose(fp);
-    free(buffer);
 
     // This part of the code extracts the "Users" array from the parsed JSON data.
     // If "Users" is an array, it proceeds to iterate through its elements using a for loop.
@@ -214,4 +213,7 @@ void print_patient(const char *cpr_to_find) {
 
     // Delete the JSON object
     cJSON_Delete(json);
+
+    //Free the memory for the buffer
+    free(buffer);
 }
