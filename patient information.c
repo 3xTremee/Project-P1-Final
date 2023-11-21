@@ -195,7 +195,7 @@ void print_patient(const char *cpr_to_find) {
                 for(int t = 0; t < 8; t++) {
                     printf("\n");
                 }
-                EnterCPR(CPRnr);
+                EnterCPR();
                 break;
         //, if 2 moves user to log-in screen and forward to EnterCPR when user has logged in again succesfully
             case 2:
