@@ -4,6 +4,8 @@ char* getTimestamp();
 
 void write_note(const char *PatientCPR){
 
+    //open file and read the file into a string and parse it
+
     //Scan patient note
     char PatientNote[100];
     printf("Please type error or note:\n");
@@ -13,15 +15,19 @@ void write_note(const char *PatientCPR){
     //Get timestamp (using top-down to make write_note() clearer)
     char *timestamp = getTimestamp();
 
-    //Creates new object to write in
-    cJSON *json = cJSON_CreateObject();
-    //Writes information to the object
-    cJSON_AddStringToObject(json, "Patient CPR:", PatientCPR);
-    cJSON_AddStringToObject(json, "Time:", timestamp);
-    cJSON_AddStringToObject(json, "Note:", PatientNote);
+    if (IsInSystem == 0) {
+        //Creates new object to write in
+        cJSON *json = cJSON_CreateObject();
+        //Writes information to the object
+        cJSON_AddStringToObject(json, "Patient CPR", PatientCPR);
+        cJSON_AddStringToObject(json, timestamp, PatientNote);
 
-    // convert the cJSON object to a JSON string which can be "uploaded" to the JSON file
-    char *json_str = cJSON_Print(json);
+        // convert the cJSON object to a JSON string which can be "uploaded" to the JSON file
+        char *json_str = cJSON_Print(json);
+    }
+
+    //if is in system, write to object...
+
 
     // Openes the JSON file in append mode to allow us to add the object without deleting the existing file
         //This means that the JSON file shows 'error cases' in chronological order
@@ -41,6 +47,12 @@ void write_note(const char *PatientCPR){
     // free temp the JSON string and cJSON object
     cJSON_free(json_str);
     cJSON_Delete(json);
+
+
+
+
+
+
 
     /*
     char *PatientCPR = "308031234";//temp
