@@ -1,22 +1,20 @@
 #include "write patient note.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <stdbool.h>
-#include <time.h>
-#include "cJSON.h"
 
-char* getTimestamp();
-
-void write_note(const char *PatientCPR){
+char *getTimestamp();           //Returns time in 'Year-Month-Day Hour:Min:Sec' format
+char OpenFile();                //Opens patient_notes.json file, parses it and returns it
+char IsPatientInFile();         //reads patient file and patient CPR-number, returns the object for the patient cpr number if it exist, otherwise returns NULL
 
 //logic:
 //>open and parse file
 //>go through JSON to check if the CPR number is in it already (dont want to have 'empty' objects for patients w/o notes
-//>>return 'patient' (if in system, otherwise NULL?) and a bool for if it is in system ([0] if not and [1] if in system)
-//>does one of two operations based on the bool, [0]: create new object with the item note, [1]: adds an item to exising object
+//>>return 'patient' (if in system, otherwise NULL?)
+//>does one of two operations based on the return, [==NULL]: create new object with the item note, [!=NULL]: adds an item to exising object
+
+void write_note(const char *PatientCPR){
 
     //open file and read the file into a string and parse it
+    char ReadFile = OpenFile();
+    char patient = IsPatientInFile(PatientCPR, ReadFile);
 
     //Scan patient note
     char PatientNote[100];
@@ -27,7 +25,15 @@ void write_note(const char *PatientCPR){
     //Get timestamp (using top-down to make write_note() clearer)
     char *timestamp = getTimestamp();
 
-    if (IsInSystem == 0) {
+    // Openes the JSON file in write mode
+    FILE *fp = fopen("patient_notes.json", "w");
+    //error message if unable to open file
+    if (fp == NULL) {
+        printf("Error: Unable to open the file.\n");
+        return 1;
+    }
+
+    if (patient == NULL) {
         //Creates new object to write in
         cJSON *json = cJSON_CreateObject();
         //Writes information to the object
@@ -36,18 +42,10 @@ void write_note(const char *PatientCPR){
 
         // convert the cJSON object to a JSON string which can be "uploaded" to the JSON file
         char *json_str = cJSON_Print(json);
-    }
-
-    //if is in system, write to object...
-
-
-    // Openes the JSON file in append mode to allow us to add the object without deleting the existing file
-        //This means that the JSON file shows 'error cases' in chronological order
-    FILE *fp = fopen("patient_notes.json", "a");
-    //error message if unable to open file
-    if (fp == NULL) {
-        printf("Error: Unable to open the file.\n");
-        return 1;
+    } else if (patient != NULL) {
+        //adds item to object
+    } else {
+        printf("Error interpreting patient object");
     }
 
     //prints the object being uploaded
@@ -102,30 +100,7 @@ void write_note(const char *PatientCPR){
         return;
     }
 
-    bool PatientInFile = 0;
 
-    //To check if the patient is registered in the notes system, check if the given CPR can be read in the file
-    cJSON *patients = cJSON_GetObjectItemCaseSensitive(json, "Patients");
-    if (cJSON_IsArray(patients)) {
-        for (int i = 0; i < cJSON_GetArraySize(patients); i++) {
-            cJSON *ReadingPatient = cJSON_GetArrayItem(patients, i);
-            cJSON *cpr = cJSON_GetObjectItemCaseSensitive(ReadingPatient, "CPR");
-
-
-            //The atof funktion converts the array of chars (String) into a float
-            if (cJSON_IsNumber(cpr) && (cpr->valuedouble == atof(PatientCPR))) {
-                cJSON *cpr = cJSON_GetObjectItemCaseSensitive(patients, "cpr");
-                cJSON *note = cJSON_GetObjectItemCaseSensitive(patients, "note");
-
-                if (cJSON_IsNumber(cpr) && (patients->valuestring != NULL)) {
-                    PatientInFile = 1;
-                    break;
-                }
-                }
-            }
-        } else{
-        printf("Error: 'Patients' is not an array in the JSON.\n");
-    }
 
 
     printf("%s\n", json_str);
@@ -160,6 +135,33 @@ void write_note(const char *PatientCPR){
 
     free(timestamp);
 
+}
+
+char IsPatientInFile(file, patient){
+    bool PatientInFile = 0;
+
+    //To check if the patient is registered in the notes system, check if the given CPR can be read in the file
+    cJSON *patients = cJSON_GetObjectItemCaseSensitive(json, "Patients");
+    if (cJSON_IsArray(patients)) {
+        for (int i = 0; i < cJSON_GetArraySize(patients); i++) {
+            cJSON *ReadingPatient = cJSON_GetArrayItem(patients, i);
+            cJSON *cpr = cJSON_GetObjectItemCaseSensitive(ReadingPatient, "CPR");
+
+
+            //The atof funktion converts the array of chars (String) into a float
+            if (cJSON_IsNumber(cpr) && (cpr->valuedouble == atof(PatientCPR))) {
+                cJSON *cpr = cJSON_GetObjectItemCaseSensitive(patients, "cpr");
+                cJSON *note = cJSON_GetObjectItemCaseSensitive(patients, "note");
+
+                if (cJSON_IsNumber(cpr) && (patients->valuestring != NULL)) {
+                    PatientInFile = 1;
+                    break;
+                }
+            }
+        }
+    } else{
+        printf("Error: 'Patients' is not an array in the JSON.\n");
+    }
 }
 
 char* getTimestamp() {
