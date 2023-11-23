@@ -174,17 +174,16 @@ void print_patient(const char *cpr_to_find) {
                     printf("Dosage8: %s\n", dosage8->valuestring);
                 }
 
-                printf("Do you need help calculating the dosage?\n");
-                printf("Type 1 for yes or 2 for no\n>");
-                int help = 0;
-                scanf("%d", &help);
-                if (help == 1) {
+                printf("\n\n\nDo you need help calculating the dosage?\n");
+                printf("Type [Y]es or [N]o\n>");
+                char help;
+                scanf(" %c", &help);
+                if (help == 'Y' || help == 'y') {
                     dosageCalculator();
                 }
 
-
                 int valg = 0;
-                printf("How many different medications have you administered?\n");
+                printf("\n\nHow many different medications have you administered?\n");
                 scanf("%d", &valg);
                 if(medicineCounter < valg){
                     printf("You have entered a number that is higher than the amount of medicine the patient can be given\n");
@@ -192,15 +191,17 @@ void print_patient(const char *cpr_to_find) {
                     scanf("%d", &valg);
 
                 }
-                //How to know how many medicine rows there are in the json file?
-
                 //For loop that runs the amount of times the user has entered in the previous scanf
                 for (int j = 0; j < valg; ++j) {
                     char medicine[100];
                     printf("Please enter the medicine you have administered\n>");
                     scanf("%s", medicine);
                     medicine[0] = toupper(medicine[0]);
+
+
+                    //Adds a timestamp to the medicine
                     addTimestampToField(patient, medicine);
+                    printf("Timestamp added to %s\n\n", medicine);
 
                     FILE *outputFile = fopen("users.json", "w");
 

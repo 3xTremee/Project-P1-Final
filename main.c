@@ -6,7 +6,6 @@
 int main() {
     if (login() == 1) {
         EnterCPR();
-        dosageCalculator();
     }
     return 0;
 }
