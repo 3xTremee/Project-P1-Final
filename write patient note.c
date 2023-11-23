@@ -10,6 +10,12 @@ char* getTimestamp();
 
 void write_note(const char *PatientCPR){
 
+//logic:
+//>open and parse file
+//>go through JSON to check if the CPR number is in it already (dont want to have 'empty' objects for patients w/o notes
+//>>return 'patient' (if in system, otherwise NULL?) and a bool for if it is in system ([0] if not and [1] if in system)
+//>does one of two operations based on the bool, [0]: create new object with the item note, [1]: adds an item to exising object
+
     //open file and read the file into a string and parse it
 
     //Scan patient note
