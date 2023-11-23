@@ -2,19 +2,21 @@
 
 char *getTimestamp();           //Returns time in 'Year-Month-Day Hour:Min:Sec' format
 char OpenFile();                //Opens patient_notes.json file, parses it and returns it
-char IsPatientInFile();         //reads patient file and patient CPR-number, returns the object for the patient cpr number if it exist, otherwise returns NULL
+char PatientObject();           //reads patient file and patient CPR-number, returns the object for the patient cpr number if it exist, otherwise returns NULL
 
 //logic:
-//>open and parse file
-//>go through JSON to check if the CPR number is in it already (dont want to have 'empty' objects for patients w/o notes
-//>>return 'patient' (if in system, otherwise NULL?)
-//>does one of two operations based on the return, [==NULL]: create new object with the item note, [!=NULL]: adds an item to exising object
+/*
+>open and parse file
+>go through JSON to check if the CPR number is in it already (dont want to have 'empty' objects for patients w/o notes
+>>return 'patient' (if in system, otherwise NULL?)
+>does one of two operations based on the return, [==NULL]: create new object with the item note, [!=NULL]: adds an item to exising object
+*/
 
 void write_note(const char *PatientCPR){
 
     //open file and read the file into a string and parse it
     char ReadFile = OpenFile();
-    char patient = IsPatientInFile(PatientCPR, ReadFile);
+    char patient = PatientObject(PatientCPR, ReadFile);
 
     //Scan patient note
     char PatientNote[100];
@@ -35,13 +37,13 @@ void write_note(const char *PatientCPR){
 
     if (patient == NULL) {
         //Creates new object to write in
-        cJSON *json = cJSON_CreateObject();
+        cJSON *NewPatient = cJSON_CreateObject();
         //Writes information to the object
-        cJSON_AddStringToObject(json, "Patient CPR", PatientCPR);
-        cJSON_AddStringToObject(json, timestamp, PatientNote);
+        cJSON_AddStringToObject(NewPatient, "Patient CPR", PatientCPR);
+        cJSON_AddStringToObject(NewPatient, timestamp, PatientNote);
 
         // convert the cJSON object to a JSON string which can be "uploaded" to the JSON file
-        char *json_str = cJSON_Print(json);
+        char *json_str = cJSON_Print(NewPatient);
     } else if (patient != NULL) {
         //adds item to object
     } else {
@@ -108,7 +110,7 @@ void write_note(const char *PatientCPR){
     fclose;
     // free the JSON string and cJSON object
     cJSON_free(json_str);
-    cJSON_Delete(note);*/
+    cJSON_Delete(note);
 
     //Open JSON file in 'W' ?? eller skal den åbnes efter og skrive en 'kopi' til den? eller 'R+'?
     //kan ogs bruge 'A', så vil JSON bare være en liste over noter, ikke sorteret i personer, men den nyeste nederst.
@@ -130,14 +132,51 @@ void write_note(const char *PatientCPR){
     //fclose(fp);
 
     // Don't forget to free the allocated memory
-
+    */
 
 
     free(timestamp);
 
 }
 
-char IsPatientInFile(file, patient){
+char OpenFile(){
+   FILE *fp = fopen("patient_notes.json", "r");
+   if(fp == NULL){
+       printf("Error, cannot open file\n")
+   }
+
+    // Get the size of the file
+    long file_size = ftell(fp);
+
+    // Dynamically allocate the buffer based on the file size
+    char *buffer = (char *) malloc(file_size + 1);
+    if (buffer == NULL) {
+        printf("Error: Unable to allocate memory.\n");
+        fclose(fp);
+        return;
+    }
+
+    // Read the contents of the file into the buffer
+    size_t len = fread(buffer, 1, file_size, fp);
+    buffer[len] = '\0'; // Null-terminate the buffer
+    fclose(fp);
+
+    // This part of the code extracts the "Users" array from the parsed JSON data.
+    // If "Users" is an array, it proceeds to iterate through its elements using a for loop.
+    cJSON *json = cJSON_Parse(buffer);
+    if (json == NULL) {
+        const char *error_ptr = cJSON_GetErrorPtr();
+        if (error_ptr != NULL) {
+            printf("Error: %s\n", error_ptr);
+        }
+        cJSON_Delete(json);
+        return;
+    }
+
+    return json;
+}
+
+char PatientObject(patient, file){
     bool PatientInFile = 0;
 
     //To check if the patient is registered in the notes system, check if the given CPR can be read in the file
