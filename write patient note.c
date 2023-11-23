@@ -176,13 +176,14 @@ char OpenFile(){
     return json;
 }
 
-char PatientObject(patient, file){
-    bool PatientInFile = 0;
+char PatientObject(PatientCPR, json){
+    int patient_object,
+        i = 0;
 
     //To check if the patient is registered in the notes system, check if the given CPR can be read in the file
     cJSON *patients = cJSON_GetObjectItemCaseSensitive(json, "Patients");
     if (cJSON_IsArray(patients)) {
-        for (int i = 0; i < cJSON_GetArraySize(patients); i++) {
+        for (i = 0; i < cJSON_GetArraySize(patients); i++) {
             cJSON *ReadingPatient = cJSON_GetArrayItem(patients, i);
             cJSON *cpr = cJSON_GetObjectItemCaseSensitive(ReadingPatient, "CPR");
 
@@ -193,14 +194,17 @@ char PatientObject(patient, file){
                 cJSON *note = cJSON_GetObjectItemCaseSensitive(patients, "note");
 
                 if (cJSON_IsNumber(cpr) && (patients->valuestring != NULL)) {
-                    PatientInFile = 1;
+                    patient_object = i;
                     break;
                 }
             }
         }
     } else{
         printf("Error: 'Patients' is not an array in the JSON.\n");
+        patient_object = NULL;
     }
+
+    return i;
 }
 
 char* getTimestamp() {
