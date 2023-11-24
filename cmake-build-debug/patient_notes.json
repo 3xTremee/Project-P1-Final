@@ -1,12 +1,13 @@
 {
-	"Patient CPR:":	"0308031234",
-	"Time:":	"2023-11-21 09:51:06",
-	"Note:":	"Patient refused medication due to \"strong side-effects after proviously taking it\""
-}{
-	"Patient CPR:":	"1411991234",
-	"Time:":	"2023-11-21 11:23:12",
-	"Note:":	"Blood sugar levels remarkably high. Appropriate dosage administered"
-}{
-	"Patient CPR":	"0308031234",
-	"2023-11-22 13:19:28":	"note"
+	"Patients":	[
+		{
+			"CPR":	308031234,
+			"Time":	"2023-11-21 09:51:06",
+			"Note":	"Patient refused medication due to \"strong side-effects after proviously taking it\""
+		}, {
+			"CPR":	1411991234,
+			"Time":	"2023-11-21 11:23:12",
+			"Note":	"Blood sugar levels remarkably high. Appropriate dosage administered"
+		}
+	]
 }
