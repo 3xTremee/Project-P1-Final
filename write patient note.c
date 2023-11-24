@@ -24,7 +24,7 @@ void write_note(){
     FILE *fp = fopen("patient_notes.json", "r");
     if (fp == NULL) {
         printf("Error: Unable to open the file.\n");
-        return 1;
+        return;
     }
 
     // read the file contents into a string
@@ -40,10 +40,72 @@ void write_note(){
             printf("Error: %s\n", error_ptr);
         }
         cJSON_Delete(json);
-        return 1;
+        return;
     }
 
 
+    int patient_object;
+    bool patient_in_system = 0;
+
+    //To check if the patient is registered in the notes system, check if the given CPR can be read in the file
+    cJSON *users = cJSON_GetObjectItemCaseSensitive(json, "Patients");
+    if (cJSON_IsArray(users)) {
+        for (int i = 0; i < cJSON_GetArraySize(users); i++) {
+            cJSON *patient = cJSON_GetArrayItem(users, i);
+            cJSON *cpr = cJSON_GetObjectItemCaseSensitive(patient, "CPR");
+
+            printf("checking i == %d for %d v %d\n", i, atof(PatientCPR), cpr->valuedouble);
+
+            //The atof funktion converts the array of chars (String) into a float
+            if (cJSON_IsNumber(cpr) && (cpr->valuedouble == atof(PatientCPR))){
+                cJSON *cpr = cJSON_GetObjectItemCaseSensitive(patient, "CPR");
+
+                patient_in_system = i;
+                printf("found, CPR object is %d", patient_object);
+                break;
+            }
+        }
+    } else{
+        printf("Error: 'Patients' is not an array in the JSON.\n");
+    }
+
+
+
+
+    char PatientNote[100];
+    printf("Please type error or note:\n");
+    //To allow the user to write sentences the program scans for %[^\n] which means that it scans for input until it records 'Enter'
+    scanf(" %[^\n]", PatientNote);
+
+    //Get timestamp (using top-down to make write_note() clearer)
+    char *timestamp = getTimestamp();
+
+    // Openes the JSON file in write mode
+    FILE *writefp = fopen("patient_notes.json", "w");
+    //error message if unable to open file
+    if (fp == NULL) {
+        printf("Error: Unable to open the file.\n");
+        return;
+    }
+
+
+    char *json_str;
+    if (patient_in_system == 0) {           //have to be fixed to add object to array
+        //Creates new object to write in
+        cJSON *NewPatient = cJSON_CreateObject();
+        //Writes information to the object
+        cJSON_AddStringToObject(NewPatient, "Patient CPR", PatientCPR);
+        cJSON_AddStringToObject(NewPatient, timestamp, PatientNote);
+
+        // convert the cJSON object to a JSON string which can be "uploaded" to the JSON file
+        *json_str = cJSON_Print(NewPatient);
+    }else if (patient_in_system == 1) {
+        //adds item to object
+        cJSON *patient = cJSON_GetArrayItem(users, patient_object);
+        cJSON_AddStringToObject(patient, timestamp, PatientNote);
+    } else {
+        printf("Error interpreting patient object");
+    }
 
     //prints the object being uploaded
     printf("\n\nFollowing note is being uploaded:\n%s\n", json_str);
