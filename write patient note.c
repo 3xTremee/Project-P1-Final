@@ -17,13 +17,14 @@ char *getTimestamp();           //Returns time in 'Year-Month-Day Hour:Min:Sec' 
 */
 
 void write_note(){
-    char PatientCPR[11] = "1411291234";
+    char PCPR[11] = "1511991234";
+    double PatientCPR = atof(PCPR);
 
     // open the JSON file
     // open the JSON file
     FILE *fp = fopen("patient_notes.json", "r");
     if (fp == NULL) {
-        printf("Error: Unable to open the file.\n");
+        printf("Error: Unable to open read file.\n");
         return;
     }
 
@@ -54,14 +55,11 @@ void write_note(){
             cJSON *patient = cJSON_GetArrayItem(users, i);
             cJSON *cpr = cJSON_GetObjectItemCaseSensitive(patient, "CPR");
 
-            printf("checking i == %d for %d v %d\n", i, atof(PatientCPR), cpr->valuedouble);
+            //
+            if (cJSON_IsNumber(cpr) && (cpr->valuedouble == PatientCPR)){
 
-            //The atof funktion converts the array of chars (String) into a float
-            if (cJSON_IsNumber(cpr) && (cpr->valuedouble == atof(PatientCPR))){
-                cJSON *cpr = cJSON_GetObjectItemCaseSensitive(patient, "CPR");
-
-                patient_in_system = i;
-                printf("found, CPR object is %d", patient_object);
+                patient_in_system = 1;
+                patient_object = i;
                 break;
             }
         }
@@ -80,154 +78,54 @@ void write_note(){
     //Get timestamp (using top-down to make write_note() clearer)
     char *timestamp = getTimestamp();
 
-    // Openes the JSON file in write mode
-    FILE *writefp = fopen("patient_notes.json", "w");
-    //error message if unable to open file
-    if (fp == NULL) {
-        printf("Error: Unable to open the file.\n");
-        return;
-    }
 
 
-    char *json_str;
+
     if (patient_in_system == 0) {           //have to be fixed to add object to array
         //Creates new object to write in
         cJSON *NewPatient = cJSON_CreateObject();
         //Writes information to the object
-        cJSON_AddStringToObject(NewPatient, "Patient CPR", PatientCPR);
+        cJSON_AddNumberToObject(NewPatient, "CPR", PatientCPR);
         cJSON_AddStringToObject(NewPatient, timestamp, PatientNote);
 
-        // convert the cJSON object to a JSON string which can be "uploaded" to the JSON file
-        *json_str = cJSON_Print(NewPatient);
+        //adds the new object to the array
+        cJSON_AddItemToArray(users, NewPatient);
+
+        printf("Patient not already in file.\nCreating file for new patient.\nAdding note to patient file.\n");
+
+    //if patient is in system, need only add new item to it
     }else if (patient_in_system == 1) {
         //adds item to object
         cJSON *patient = cJSON_GetArrayItem(users, patient_object);
         cJSON_AddStringToObject(patient, timestamp, PatientNote);
+
+        printf("Adding note to patient file.\n");
     } else {
         printf("Error interpreting patient object");
     }
 
-    //prints the object being uploaded
-    printf("\n\nFollowing note is being uploaded:\n%s\n", json_str);
-    //adds the new object to the JSON file
-    fputs(json_str, fp);
-    //closes the JSON file
-    fclose;
-    // free temp the JSON string and cJSON object
-    cJSON_free(json_str);
-    cJSON_Delete(json);
 
 
 
+    char *json_str = cJSON_Print(json);
 
-
-
-
-    /*
-    char *PatientCPR = "308031234";//temp
-
-    //Scan patient note
-    char PatientNote[100];
-    printf("Please type error or note:\n");
-    scanf("%s\n", PatientNote);
-
-    cJSON *Patient = cJSON_CreateObject();
-    //cJSON_AddStringToObject(json, "note", PatientNote);
-    cJSON *note, cJSON_AddItemToObject(Patients, "PatientNote", "note");
-
-
-    char *json_str = cJSON_Print(note);
-
-    FILE *fp = fopen("patient_notes.json", "w");
+    // write the JSON string to the file
+    fp = fopen("patient_notes.json", "w");
     if (fp == NULL) {
         printf("Error: Unable to open the file.\n");
         return;
     }
-
-    // This code reads the contents of the opened file into a character buffer named buffer.
-    //char buffer[3048];
-    //int len = fread(buffer, 1, sizeof(buffer), fp);
-
-    //Extracts the array from the parsed JSON data
-    cJSON *json = cJSON_Parse(buffer);
-    if (json == NULL) {
-        const char *error_ptr = cJSON_GetErrorPtr();
-        if (error_ptr != NULL) {
-            printf("Error: %s\n", error_ptr);
-        }
-        cJSON_Delete(json);
-        return;
-    }
-
-
-
-
-    printf("%s\n", json_str);
     fputs(json_str, fp);
-    fclose;
+    fclose(fp);
+
     // free the JSON string and cJSON object
     cJSON_free(json_str);
-    cJSON_Delete(note);
+    cJSON_Delete(json);
 
-    //Open JSON file in 'W' ?? eller skal den åbnes efter og skrive en 'kopi' til den? eller 'R+'?
-    //kan ogs bruge 'A', så vil JSON bare være en liste over noter, ikke sorteret i personer, men den nyeste nederst.
-    //det kunne også være muglig. Hvis den bliver 'wiped' hver dag og hver dag bliver en "rapport" af errors sendt til kontoret
-    // (hvis det overhovedet kommer til at være så ofte(det er det nok egentlig ikke...))
-
-    //create object for the CPR if PatientInFIle == 0
-    //CJSON_PUBLIC(cJSON *) cJSON_CreateObject(void); - ????
-    //if (PatientInFile == 0){
-    //    cJSON_CreateObject();
-    //}
-
-    //create item in object (CPR)
-    //CJSON_PUBLIC(cJSON_bool) cJSON_AddItemToObject(cJSON *object, const char *string, cJSON *item);
-    //item = current time
-    //string = scanned note
-    //object = PatientCPR
-
-    //fclose(fp);
-
-    // Don't forget to free the allocated memory
-    */
-
-
-    //free(timestamp);
+    free(timestamp);
 
 }
 
-/*
-char PatientObject(double PatientCPR, cJSON json){
-    int patient_object,
-        i = 0;
-
-    //To check if the patient is registered in the notes system, check if the given CPR can be read in the file
-    cJSON *patients = cJSON_GetObjectItemCaseSensitive(json, "Patients");
-    if (cJSON_IsArray(patients)) {
-        for (i = 0; i < cJSON_GetArraySize(patients); i++) {
-            cJSON *ReadingPatient = cJSON_GetArrayItem(patients, i);
-            cJSON *cpr = cJSON_GetObjectItemCaseSensitive(ReadingPatient, "CPR");
-
-
-            //The atof funktion converts the array of chars (String) into a float
-            if (cJSON_IsNumber(cpr) && (cpr->valuedouble == PatientCPR)) {
-                cJSON *cpr = cJSON_GetObjectItemCaseSensitive(patients, "cpr");
-                cJSON *note = cJSON_GetObjectItemCaseSensitive(patients, "note");
-
-                if (cJSON_IsNumber(cpr) && (patients->valuestring != NULL)) {
-                    patient_object = i;
-                    break;
-                }
-            }
-        }
-    } else{
-        printf("Error: 'Patients' is not an array in the JSON.\n");
-        patient_object = NULL;
-    }
-
-    return i;
-}
-*/
 char* getTimestamp() {
     time_t t;
     //the tm struct allows for the program to translate the time_t to something readable for a human
