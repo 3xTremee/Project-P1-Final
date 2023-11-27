@@ -1,13 +1,6 @@
 {
 	"Patients":	[{
-			"CPR":	308031234,
-			"2023-11-27 09:54:19":	"asdfghjk",
-			"2023-11-27 11:09:59":	"asdfghjk",
-			"2023-11-27 11:10:55":	"adfghj"
-		}, {
-			"CPR":	1411291234,
-			"2023-11-27 09:44:30":	"asdfghjk",
-			"2023-11-27 09:49:40":	"asdfghj",
-			"2023-11-27 09:52:36":	"Patient refused medication due to \"strong side-effects after previously taking it\""
+			"CPR":	1511991234,
+			"2023/11-27 11:43:05":	"NOTE"
 		}]
 }
