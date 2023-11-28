@@ -1,5 +1,6 @@
 #include "smaller functions.h"
-
+#define LIQUID_DOSAGE 2
+#define WEIGHT_BASED_DOSAGE 1
 
 // If it fails to open the file (e.g., due to a file not found), it prints an error message and returns from the function.
 void file_opening(FILE *fp) {
@@ -7,3 +8,86 @@ if (fp == NULL) {
 printf("Error: Unable to open the file.\n");
 return;
 }}
+
+void weightBasedDosage() {
+    double* dosage = (double*)malloc(sizeof(double));
+    double patientWeight, maxDosage;
+    int unitChoice3;
+
+    printf("Enter the patient's weight in kilograms\n>");
+    scanf("%lf", &patientWeight);
+
+    printf("Input medicine dosage per kg\n>");
+    scanf("%lf", dosage);
+
+    printf("Choose the unit (1 for g, 2 for mg, 3 for mcg)\n>");
+    scanf("%d", &unitChoice3);
+
+    printf("Enter the maximum allowable dosage\n>");
+    scanf("%lf", &maxDosage);
+
+    while (*dosage > maxDosage) {
+        printf("The dosage is too high, please enter a new dosage.\n>");
+        scanf("%lf", dosage);
+    }
+
+    if (*dosage < maxDosage) {
+        switch (unitChoice3) {
+            case 1:
+                *dosage *= patientWeight;
+                printf("The calculated dosage is: %.2lf g.\n", *dosage);
+                break;
+            case 2:
+                *dosage *= patientWeight * 1000;
+                printf("The calculated dosage is: %.2lf mg.\n", *dosage);
+                break;
+            case 3:
+                *dosage *= patientWeight * 1000000;
+                printf("The calculated dosage is: %.2lf mcg.\n", *dosage);
+                break;
+            default:
+                printf("Invalid unit choice. Exiting...\n");
+                free(dosage);
+                return;
+        }
+    }
+    free(dosage);
+}
+
+void liquidDosage(int unitChoice2) {
+    double* dosage = (double*)malloc(sizeof(double));
+    double liquidDose, concentration;
+    int unitChoice;
+
+    if (unitChoice2 == LIQUID_DOSAGE) {
+        printf("Select the unit of measurement for the liquid dosage.\n");
+        printf("1 for ml/L, 2 for mg/L, 3 for mcg/L.\n>");
+        scanf("%d", &unitChoice);
+
+        printf("Enter the medicine concentration.\n>");
+        scanf("%lf", &concentration);
+
+        printf("Enter the dosage.\n>");
+        scanf("%lf", dosage);
+
+        switch (unitChoice) {
+            case 1:
+                liquidDose = *dosage / concentration;
+                printf("The liquid dosage is: %.2lf ml.\n", liquidDose);
+                break;
+            case 2:
+                liquidDose = (*dosage / concentration) * 1000;
+                printf("The liquid dosage is: %.2lf ml.\n", liquidDose);
+                break;
+            case 3:
+                liquidDose = (*dosage / concentration) * 1000000;
+                printf("The liquid dosage is: %.2lf ml.\n", liquidDose);
+                break;
+            default:
+                printf("Invalid unit choice. Exiting...\n");
+                free(dosage);
+                return;
+        }
+    }
+    free(dosage);
+}
