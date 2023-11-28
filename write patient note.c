@@ -83,14 +83,18 @@ void write_note(const char InputCPR[11]){
 
 
     //Scan for patient note (limited to 100, may change if needed)
-    char PatientNote[100];
+    char Note[100];
     printf("Please type error or note:\n");
     //scans user input until it meets a new line, allows it to scan full sentences (but not paragraphs)
-    scanf(" %[^\n]", PatientNote);
+    scanf(" %[^\n]", Note);
 
     //Get current timestamp
     char *timestamp = getTimestamp();
 
+    char PatientNote[120] = "";
+
+    strcat(PatientNote, timestamp);
+    strcat(PatientNote, Note);
 
 
     //If the patient CPR is not in system, it needs to add a new object and note to the new object
@@ -99,7 +103,7 @@ void write_note(const char InputCPR[11]){
         cJSON *NewPatient = cJSON_CreateObject();
         //Adds both CPR number and the patient note to the new object
         cJSON_AddNumberToObject(NewPatient, "CPR", PatientCPR);
-        cJSON_AddStringToObject(NewPatient, timestamp, PatientNote);
+        cJSON_AddStringToObject(NewPatient, "NOTE", PatientNote);
 
         //adds the new object to the array
         cJSON_AddItemToArray(patients, NewPatient);
@@ -111,7 +115,7 @@ void write_note(const char InputCPR[11]){
         //Finds the object from the array and the object index extracted from loop earlier
         cJSON *patient = cJSON_GetArrayItem(patients, patient_object);
         //Adds patient note to the existing object
-        cJSON_AddStringToObject(patient, timestamp, PatientNote);
+        cJSON_AddStringToObject(patient, "NOTE", PatientNote);
 
         printf("Adding note to patient file.\n");
     //If somehow neither is true, prints error message
@@ -153,10 +157,10 @@ char* getTimestamp() {
     timestamp = localtime(&t);
 
     // Create a char string to store the formatted timestamp
-    char *timestampString = (char *) malloc(20); // 20 because the timestamp is 19 characters long
+    char *timestampString = (char *) malloc(36); // 36 because the timestamp is 35 characters long
 
     // Use strftime to format the timestamp string
-    strftime(timestampString, 20, "%Y/%m-%d %X", timestamp);
+    strftime(timestampString, 36, "\nDATE: %Y/%m-%d %X\nNOTE: ", timestamp);
 
     // Return the formatted timestamp
     return timestampString;
