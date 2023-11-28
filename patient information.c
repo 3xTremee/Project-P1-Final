@@ -4,27 +4,16 @@ void print_patient(const char *cpr_to_find) {
     // This code attempts to open the file "users.json" for reading.
     // If it fails to open the file (e.g., due to a file not found), it prints an error message and returns from the function.
     FILE *fp = fopen("users.json", "r");
-    file_opening(fp);
+    check_file_opening(fp);
 
-    // Move the file pointer to the end of the file
-    fseek(fp, 0, SEEK_END);
-
-    // Get the size of the file
-    long file_size = ftell(fp);
-
-    // Move the file pointer back to the beginning of the file
-    fseek(fp, 0, SEEK_SET);
+    size_of_file(fp);
 
     // Dynamically allocate the buffer based on the file size
-    char *buffer = (char *) malloc(file_size + 1);
-    if (buffer == NULL) {
-        printf("Error: Unable to allocate memory.\n");
-        fclose(fp);
-        return;
-    }
+    char *buffer = (char *) malloc(size_of_file(fp) + 1);
+    check_buffer(buffer);
 
     // Read the contents of the file into the buffer
-    size_t len = fread(buffer, 1, file_size, fp);
+    size_t len = fread(buffer, 1, size_of_file(fp), fp);
     buffer[len] = '\0'; // Null-terminate the buffer
     fclose(fp);
 
@@ -197,7 +186,7 @@ void print_patient(const char *cpr_to_find) {
                     printf("Timestamp added to %s\n\n", medicine);
 
                     FILE *outputFile = fopen("users.json", "w");
-                    file_opening(outputFile);
+                    check_file_opening(outputFile);
 
                     char *updatedJsonText = cJSON_Print(json);
                     fprintf(outputFile, "%s", updatedJsonText);

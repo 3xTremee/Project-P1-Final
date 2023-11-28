@@ -3,11 +3,31 @@
 #define WEIGHT_BASED_DOSAGE 1
 
 // If it fails to open the file (e.g., due to a file not found), it prints an error message and returns from the function.
-void file_opening(FILE *fp) {
+void check_file_opening(FILE *fp) {
 if (fp == NULL) {
 printf("Error: Unable to open the file.\n");
 return;
 }}
+
+long size_of_file(FILE *fp) {
+// Move the file pointer to the end of the file
+    fseek(fp, 0, SEEK_END);
+
+// Get the size of the file
+    long file_size = ftell(fp);
+
+// Move the file pointer back to the beginning of the file
+    fseek(fp, 0, SEEK_SET);
+
+    return file_size;
+}
+// Dynamically allocate the buffer based on the file size
+void check_buffer(char *buffer) {
+if (buffer == NULL) {
+printf("Error: Unable to allocate memory.\n");
+return;
+}}
+
 
 void weightBasedDosage() {
     double* dosage = (double*)malloc(sizeof(double));
