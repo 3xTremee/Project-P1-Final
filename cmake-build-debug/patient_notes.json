@@ -1,10 +1,6 @@
 {
 	"Patients":	[{
-			"CPR":	1511991234,
-			"2023/11-27 11:43:05":	"Patient Note",
-			"2023/11-28 09:51:54":	"Another patient note"
-		}, {
 			"CPR":	308031234,
-			"2023/11-28 09:52:21":	"Patient Note"
+			"NOTE":	"\nDATE: 2023/11-28 10:30:07\nNOTE: Patient Note"
 		}]
 }
