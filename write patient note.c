@@ -146,15 +146,16 @@ void write_note(const char InputCPR[11]){
 }
 
 char* getTimestamp() {
-    time_t t;
-    //the tm struct allows for the program to translate the time_t to something readable for a human
+    //based on https://www.tutorialspoint.com/c_standard_library/c_function_strftime.htm
+
+    time_t RawTime;
     struct tm *timestamp;
 
     // Use time function to get current time
-    t = time(NULL);
+    time(&RawTime);
 
-    // Use localtime to convert the time_t value to a tm structure
-    timestamp = localtime(&t);
+    //converts the 'RawTime' using localtime and stores it in 'timestamp'
+    timestamp = localtime(&RawTime);
 
     // Create a char string to store the formatted timestamp
     char *timestampString = (char *) malloc(36); // 36 because the timestamp is 35 characters long
