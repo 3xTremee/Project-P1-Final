@@ -18,7 +18,7 @@ int login() {
 
         // Open pass.json file and read it (r). If fail then print error.
         fileptr = fopen("pass.json", "r");
-        file_opening(fileptr);
+        check_file_opening(fileptr);
 
         // get file length
         fseek(fileptr, 0, SEEK_END);

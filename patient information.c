@@ -188,10 +188,7 @@ void print_patient(const char *cpr_to_find) {
                     FILE *outputFile = fopen("users.json", "w");
                     check_file_opening(outputFile);
 
-                    char *updatedJsonText = cJSON_Print(json);
-                    fprintf(outputFile, "%s", updatedJsonText);
-                    fclose(outputFile);
-                    free(updatedJsonText);
+                    update_json(json, outputFile);
 
                 }
                 cJSON_Delete(patient);

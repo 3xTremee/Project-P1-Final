@@ -28,6 +28,12 @@ printf("Error: Unable to allocate memory.\n");
 return;
 }}
 
+void update_json(cJSON *json, FILE *outputFile) {
+char *updatedJsonText = cJSON_Print(json);
+fprintf(outputFile, "%s", updatedJsonText);
+fclose(outputFile);
+free(updatedJsonText);
+}
 
 void weightBasedDosage() {
     double* dosage = (double*)malloc(sizeof(double));
