@@ -1,9 +1,4 @@
 #include "write patient note.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdbool.h>
-#include <time.h>
-#include "cJSON.h"
 
 char *getTimestamp();           //Returns time in 'Year/Month-Day Hour:Min:Sec' format
 
@@ -14,7 +9,7 @@ char *getTimestamp();           //Returns time in 'Year/Month-Day Hour:Min:Sec' 
 >does one of two operations based on the return, [==0]: create new object with the item note, [!=0]: adds an item to exising object
 */
 
-void write_note(char InputCPR){
+void write_note(const char InputCPR[11]){
     //instead of using atof multiple times further down, simply creating a double with the atof of inputCPR to refer to instead
     double PatientCPR = atof(InputCPR);
 
@@ -26,9 +21,19 @@ void write_note(char InputCPR){
         return;
     }
 
-    // BUFFER NEEDS TO BE CHANGED TO DYNAMIC
-    char buffer[1024];
-    int len = fread(buffer, 1, sizeof(buffer), fp);
+    // Move the file pointer to the end of the file
+    fseek(fp, 0, SEEK_END);
+    // Get the current position, which is the size of the file
+    long file_size = ftell(fp);
+    // Move the file pointer back to the beginning of the file
+    fseek(fp, 0, SEEK_SET);
+
+
+    //create buffer
+    char* buffer = (char *)malloc(file_size * 1);
+
+    int len = fread(buffer, 1, file_size, fp);
+    buffer[len] = '\0'; // Null-terminate the buffer
     fclose(fp);
 
     // parse the JSON data into 'json'
@@ -77,7 +82,6 @@ void write_note(char InputCPR){
 
 
 
-
     //Scan for patient note (limited to 100, may change if needed)
     char PatientNote[100];
     printf("Please type error or note:\n");
@@ -86,7 +90,6 @@ void write_note(char InputCPR){
 
     //Get current timestamp
     char *timestamp = getTimestamp();
-
 
 
 
@@ -131,12 +134,12 @@ void write_note(char InputCPR){
     fputs(json_str, fp);
     fclose(fp);
 
-    // free the timestamp, JSON string and cJSON object
+    // free the buffer, timestamp, JSON string and cJSON object
     cJSON_free(json_str);
     cJSON_Delete(json);
     free(timestamp);
+    free(buffer);
 }
-
 
 char* getTimestamp() {
     time_t t;
@@ -150,10 +153,9 @@ char* getTimestamp() {
     timestamp = localtime(&t);
 
     // Create a char string to store the formatted timestamp
-    char *timestampString = (char *) malloc(20); // Adjust the size as needed
+    char *timestampString = (char *) malloc(20); // 20 because the timestamp is 19 characters long
 
     // Use strftime to format the timestamp string
-    //https://www.tutorialspoint.com/c_standard_library/c_function_strftime.htm
     strftime(timestampString, 20, "%Y/%m-%d %X", timestamp);
 
     // Return the formatted timestamp
