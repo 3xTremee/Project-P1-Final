@@ -3,15 +3,13 @@
 #include "cpr.h"
 #include "dosage.h"
 #include "timestamp.h"
+#include "smaller functions.h"
 
 void print_patient(const char *cpr_to_find) {
     // This code attempts to open the file "users.json" for reading.
     // If it fails to open the file (e.g., due to a file not found), it prints an error message and returns from the function.
     FILE *fp = fopen("users.json", "r");
-    if (fp == NULL) {
-        printf("Error: Unable to open the file.\n");
-        return;
-    }
+    file_opening(fp);
 
     // Move the file pointer to the end of the file
     fseek(fp, 0, SEEK_END);
@@ -204,6 +202,7 @@ void print_patient(const char *cpr_to_find) {
                     printf("Timestamp added to %s\n\n", medicine);
 
                     FILE *outputFile = fopen("users.json", "w");
+                    file_opening(outputFile);
 
                     char *updatedJsonText = cJSON_Print(json);
                     fprintf(outputFile, "%s", updatedJsonText);
