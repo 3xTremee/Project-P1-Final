@@ -1,8 +1,5 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 #include "login.h"
-#include "cJSON.h"
+
 
 int login() {
     FILE *fileptr;
@@ -21,10 +18,7 @@ int login() {
 
         // Open pass.json file and read it (r). If fail then print error.
         fileptr = fopen("pass.json", "r");
-        if (fileptr == NULL) {
-            perror("Error opening file");
-            return -1;
-        }
+        file_opening(fileptr);
 
         // get file length
         fseek(fileptr, 0, SEEK_END);

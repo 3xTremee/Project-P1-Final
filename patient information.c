@@ -1,9 +1,4 @@
 #include "patient information.h"
-#include "login.h"
-#include "cpr.h"
-#include "dosage.h"
-#include "timestamp.h"
-#include "smaller functions.h"
 
 void print_patient(const char *cpr_to_find) {
     // This code attempts to open the file "users.json" for reading.
