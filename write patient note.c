@@ -124,7 +124,6 @@ void write_note(const char InputCPR[11]){
     }
 
 
-
     //Makes a string to put it in file
     char *json_str = cJSON_Print(json);
 
@@ -146,6 +145,7 @@ void write_note(const char InputCPR[11]){
     cJSON_Delete(json);
     free(timestamp);
     free(buffer);
+    return;
 }
 
 char* getTimestamp() {

@@ -214,22 +214,22 @@ void print_patient(const char *cpr_to_find) {
         printf("\n");
     }
 
+    char NoteChoice;
+    printf("Do you want to add a note to the patient file? [Y/N]\n>");
 
-    char NoteChoise;
-    printf("Do you need to add a note?[Y/N]\n")
-    do{
-        scanf(" %c", &NoteChoise);
+    do {
+        scanf(" %c", &NoteChoice);
 
-        switch (NoteChoise) {
-            case "Y":
-                write_note(cpr_to_find);
-                break;
-            case "N":
-                break;
-            default:
-                printf("You have not chosen a valid option. Please choose a valid option [Y/N].\n");
+        if (NoteChoice == 'Y' || NoteChoice == 'y') {
+            write_note(cpr_to_find);
+            break;
+        } else if (NoteChoice == 'N' || NoteChoice == 'n') {
+            break;
         }
-    } while (NoteChoise != "Y" && NoteChoise != "N");
+        else {
+            printf("You have not chosen a valid option. Please choose a valid option [Y/N].\n");
+        }
+    } while (NoteChoice != "Y" || NoteChoice != "N" || NoteChoice != "y" || NoteChoice != "n");
 
 
     int valg;
