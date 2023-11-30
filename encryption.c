@@ -70,6 +70,29 @@ int gerateNumberKey() {
     return rand() % 10;
 }
 
+int enncrypt_function_with_key(){
+    FILE *fp = fopen("decrypted_output.json", "r");
+    can_file_open(fp);
+    // Getting the file size
+    fseek(fp, 0, SEEK_END);
+    long fileSize = ftell(fp);
+    fseek(fp, 0, SEEK_SET);
+
+    // Reading the content of the file into a string
+    char *content = (char *) malloc(fileSize + 1);
+    fread(content, 1, fileSize, fp);
+    content[fileSize] = '\0';
+    fclose(fp);
+    int storedWordKey = readKeyFromFile("word_key.txt");
+    int storedNumberKey = readKeyFromFile("number_key.txt");
+    caesarEncrypt(content, storedWordKey, storedNumberKey);
+    FILE *input = fopen("users.json", "w");
+    can_file_open(input);
+    fprintf(input, "%s", content);
+    fclose(input);
+    free(content);
+}
+
 int enryptionAndDecryption(const char* file_name) {
     // Check if word key exists
     if (!keyExists("word_key.txt")) {

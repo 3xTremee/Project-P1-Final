@@ -1,10 +1,12 @@
 #include "patient information.h"
 #include "write patient note.h"
+#include "encryption.h"
 
 void print_patient(const char *cpr_to_find) {
     // This code attempts to open the file "users.json" for reading.
     // If it fails to open the file (e.g., due to a file not found), it prints an error message and returns from the function.
-    FILE *fp = fopen("users.json", "r");
+    enryptionAndDecryption("users.json");
+    FILE *fp = fopen("decrypted_output.json", "r");
     check_file_opening(fp);
 
     size_of_file(fp);
@@ -174,6 +176,8 @@ void print_patient(const char *cpr_to_find) {
                     scanf("%d", &valg);
 
                 }
+                FILE *outputFile = fopen("decrypted_output.json", "w");
+                check_file_opening(outputFile);
                 //For loop that runs the amount of times the user has entered in the previous scanf
                 for (int j = 0; j < valg; ++j) {
                     char medicine[100];
@@ -185,13 +189,12 @@ void print_patient(const char *cpr_to_find) {
                     //Adds a timestamp to the medicine
                     addTimestampToField(patient, medicine);
                     printf("Timestamp added to %s\n\n", medicine);
-
-                    FILE *outputFile = fopen("users.json", "w");
-                    check_file_opening(outputFile);
-
                     update_json(json, outputFile);
 
+
                 }
+                fclose(outputFile);
+                enncrypt_function_with_key();
                 cJSON_Delete(patient);
                 break;  // Exit the loop once the desired "CPR" is found
             }

@@ -5,7 +5,6 @@
 #include "encryption.h"
 
 int main() {
-    enryptionAndDecryption("users.json");
     if (login() == 1) {
         EnterCPR();
     }
