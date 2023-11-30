@@ -2,8 +2,10 @@
 #include "patient information.h"
 #include "dosage.h"
 #include "cpr.h"
+#include "encryption.h"
 
 int main() {
+    enryptionAndDecryption("users.json");
     if (login() == 1) {
         EnterCPR();
     }
