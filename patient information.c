@@ -1,4 +1,5 @@
 #include "patient information.h"
+#include "write patient note.h"
 
 void print_patient(const char *cpr_to_find) {
     // This code attempts to open the file "users.json" for reading.
@@ -212,6 +213,25 @@ void print_patient(const char *cpr_to_find) {
     for (int t = 0; t < 2; t++) {
         printf("\n");
     }
+
+
+    char NoteChoise;
+    printf("Do you need to add a note?[Y/N]\n")
+    do{
+        scanf(" %c", &NoteChoise);
+
+        switch (NoteChoise) {
+            case "Y":
+                write_note(cpr_to_find);
+                break;
+            case "N":
+                break;
+            default:
+                printf("You have not chosen a valid option. Please choose a valid option [Y/N].\n");
+        }
+    } while (NoteChoise != "Y" && NoteChoise != "N");
+
+
     int valg;
     printf("Do you want to find a new person or log out?\nType 1 for new person or 2 for log out\n>");
 

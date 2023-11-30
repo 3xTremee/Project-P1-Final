@@ -128,13 +128,16 @@ void write_note(const char InputCPR[11]){
     //Makes a string to put it in file
     char *json_str = cJSON_Print(json);
 
-    // write the JSON string to the file
-    fp = fopen("patient_notes.json", "w");
+    // Open the file (using w only updates after program stopped, r+ can do it live for some reason)
+    fp = fopen("patient_notes.json", "r+");
     if (fp == NULL) {
-        printf("Error: Unable to open write file.\n");
+        printf("Error: Unable to open file for reading and writing.\n");
         return;
     }
-    //puts the new string into the file
+
+    //when using r+ set file pointer to start of file, when writing to file it overwrites existing file
+    fseek(fp, 0, SEEK_SET);
+
     fputs(json_str, fp);
     fclose(fp);
 
@@ -146,8 +149,6 @@ void write_note(const char InputCPR[11]){
 }
 
 char* getTimestamp() {
-    //based on https://www.tutorialspoint.com/c_standard_library/c_function_strftime.htm
-
     time_t RawTime;
     struct tm *timestamp;
 
