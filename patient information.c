@@ -40,29 +40,12 @@ void print_patient(const char *cpr_to_find) {
             cJSON *patient = cJSON_GetArrayItem(users, i);
             cJSON *cpr = cJSON_GetObjectItemCaseSensitive(patient, "CPR");
 
-
             //The atof funktion converts the array of chars (String) into a float
             if (cJSON_IsNumber(cpr) && (cpr->valuedouble == atof(cpr_to_find))) {
                 cJSON *name = cJSON_GetObjectItemCaseSensitive(patient, "Name");
                 cJSON *age = cJSON_GetObjectItemCaseSensitive(patient, "Age");
                 cJSON *gender = cJSON_GetObjectItemCaseSensitive(patient, "Gender");
                 cJSON *diagnosis = cJSON_GetObjectItemCaseSensitive(patient, "Diagnosis");
-                cJSON *medicine1 = cJSON_GetObjectItemCaseSensitive(patient, "Medicine1");
-                cJSON *dosage1 = cJSON_GetObjectItemCaseSensitive(patient, "Dosage1");
-                cJSON *medicine2 = cJSON_GetObjectItemCaseSensitive(patient, "Medicine2");
-                cJSON *dosage2 = cJSON_GetObjectItemCaseSensitive(patient, "Dosage2");
-                cJSON *medicine3 = cJSON_GetObjectItemCaseSensitive(patient, "Medicine3");
-                cJSON *dosage3 = cJSON_GetObjectItemCaseSensitive(patient, "Dosage3");
-                cJSON *medicine4 = cJSON_GetObjectItemCaseSensitive(patient, "Medicine4");
-                cJSON *dosage4 = cJSON_GetObjectItemCaseSensitive(patient, "Dosage4");
-                cJSON *medicine5 = cJSON_GetObjectItemCaseSensitive(patient, "Medicine5");
-                cJSON *dosage5 = cJSON_GetObjectItemCaseSensitive(patient, "Dosage5");
-                cJSON *medicine6 = cJSON_GetObjectItemCaseSensitive(patient, "Medicine6");
-                cJSON *dosage6 = cJSON_GetObjectItemCaseSensitive(patient, "Dosage6");
-                cJSON *medicine7 = cJSON_GetObjectItemCaseSensitive(patient, "Medicine7");
-                cJSON *dosage7 = cJSON_GetObjectItemCaseSensitive(patient, "Dosage7");
-                cJSON *medicine8 = cJSON_GetObjectItemCaseSensitive(patient, "Medicine8");
-                cJSON *dosage8 = cJSON_GetObjectItemCaseSensitive(patient, "Dosage8");
 
                 //int which is used as a counter for the amount of medication that a patient can be given
                 int medicineCounter = 0;
@@ -78,87 +61,27 @@ void print_patient(const char *cpr_to_find) {
                 if (cJSON_IsNumber(age)) {
                     printf("Age: %d\n", age->valueint);
                 }
-
                 if (cJSON_IsString(gender) && (gender->valuestring != NULL)) {
                     printf("Gender: %s\n", gender->valuestring);
                 }
-
                 if (cJSON_IsString(diagnosis) && (diagnosis->valuestring != NULL)) {
                     printf("Diagnosis: %s\n", diagnosis->valuestring);
                 }
 
-                if (cJSON_IsString(medicine1) && (medicine1->valuestring != NULL)) {
-                    printf("Medicine1: %s\n", medicine1->valuestring);
-                    medicineCounter++;
+                //Prints the medicine and dosage for the patient
+                for (int i = 1; i <= 8; i++) {
+                    char medicineKey[15], dosageKey[15];
+
+                    sprintf(medicineKey, "Medicine%d", i);
+                    sprintf(dosageKey, "Dosage%d", i);
+
+                    cJSON *medicine = cJSON_GetObjectItemCaseSensitive(patient, medicineKey);
+                    cJSON *dosage = cJSON_GetObjectItemCaseSensitive(patient, dosageKey);
+
+                    printMedicineDosage(medicine, dosage, i, &medicineCounter);
                 }
 
-                if (cJSON_IsString(dosage1) && (dosage1->valuestring != NULL)) {
-                    printf("Dosage1: %s\n", dosage1->valuestring);
-                }
-
-                if (cJSON_IsString(medicine2) && (medicine2->valuestring != NULL)) {
-                    printf("Medicine2: %s\n", medicine2->valuestring);
-                    medicineCounter++;
-                }
-
-                if (cJSON_IsString(dosage2) && (dosage2->valuestring != NULL)) {
-                    printf("Dosage2: %s\n", dosage2->valuestring);
-                }
-
-                if (cJSON_IsString(medicine3) && (medicine3->valuestring != NULL)) {
-                    printf("Medicine3: %s\n", medicine3->valuestring);
-                    medicineCounter++;
-                }
-
-                if (cJSON_IsString(dosage3) && (dosage3->valuestring != NULL)) {
-                    printf("Dosage3: %s\n", dosage3->valuestring);
-                }
-
-                if (cJSON_IsString(medicine4) && (medicine4->valuestring != NULL)) {
-                    printf("Medicine4: %s\n", medicine4->valuestring);
-                    medicineCounter++;
-                }
-
-                if (cJSON_IsString(dosage4) && (dosage4->valuestring != NULL)) {
-                    printf("Dosage4: %s\n", dosage4->valuestring);
-                }
-
-                if (cJSON_IsString(medicine5) && (medicine5->valuestring != NULL)) {
-                    printf("Medicine5: %s\n", medicine5->valuestring);
-                    medicineCounter++;
-                }
-
-                if (cJSON_IsString(dosage5) && (dosage5->valuestring != NULL)) {
-                    printf("Dosage5: %s\n", dosage5->valuestring);
-                }
-
-                if (cJSON_IsString(medicine6) && (medicine6->valuestring != NULL)) {
-                    printf("Medicine6: %s\n", medicine6->valuestring);
-                    medicineCounter++;
-                }
-
-                if (cJSON_IsString(dosage6) && (dosage6->valuestring != NULL)) {
-                    printf("Dosage6: %s\n", dosage6->valuestring);
-                }
-
-                if (cJSON_IsString(medicine7) && (medicine7->valuestring != NULL)) {
-                    printf("Medicine7: %s\n", medicine7->valuestring);
-                    medicineCounter++;
-                }
-
-                if (cJSON_IsString(dosage7) && (dosage7->valuestring != NULL)) {
-                    printf("Dosage7: %s\n", dosage7->valuestring);
-                }
-
-                if (cJSON_IsString(medicine8) && (medicine8->valuestring != NULL)) {
-                    printf("Medicine8: %s\n", medicine8->valuestring);
-                    medicineCounter++;
-                }
-
-                if (cJSON_IsString(dosage8) && (dosage8->valuestring != NULL)) {
-                    printf("Dosage8: %s\n", dosage8->valuestring);
-                }
-
+                //Asks the user if they need help calculating the dosage
                 printf("\n\n\nDo you need help calculating the dosage?\n");
                 printf("Type [Y]es or [N]o\n>");
                 char help;
@@ -167,6 +90,7 @@ void print_patient(const char *cpr_to_find) {
                     dosageCalculator();
                 }
 
+                //Asks the user how many different medications they have administered
                 int valg = 0;
                 printf("\n\nHow many different medications have you administered?\n");
                 scanf("%d", &valg);
@@ -174,8 +98,8 @@ void print_patient(const char *cpr_to_find) {
                     printf("You have entered a number that is higher than the amount of medicine the patient can be given\n");
                     printf("Please enter a number between 0 and %d\n", medicineCounter);
                     scanf("%d", &valg);
-
                 }
+
                 FILE *outputFile = fopen("decrypted_output.json", "w");
                 check_file_opening(outputFile);
                 //For loop that runs the amount of times the user has entered in the previous scanf
@@ -185,12 +109,10 @@ void print_patient(const char *cpr_to_find) {
                     scanf("%s", medicine);
                     medicine[0] = toupper(medicine[0]);
 
-
                     //Adds a timestamp to the medicine
                     addTimestampToField(patient, medicine);
                     printf("Timestamp added to %s\n\n", medicine);
                     update_json(json, outputFile);
-
 
                 }
                 fclose(outputFile);
@@ -198,7 +120,6 @@ void print_patient(const char *cpr_to_find) {
                 cJSON_Delete(patient);
                 break;  // Exit the loop once the desired "CPR" is found
             }
-
         }
         //If the CPR number does not have information to print, the program prompts the user to reenter CPR.number
         // so we can insert an error message and run EnterCPR again
@@ -206,7 +127,6 @@ void print_patient(const char *cpr_to_find) {
             printf("CPR-number not in system\n");
             EnterCPR();
         }
-
     } else {
         //If no "Users" is found in the JSON file, prints error message.
         printf("Error: 'Users' is not an array in the JSON.\n");
@@ -243,7 +163,6 @@ void print_patient(const char *cpr_to_find) {
         // either continuing to the next patient 1 or log out 2
         scanf(" %d", &valg);
         char CPRnr[11];
-
         //Switch case, if input is 1, it runs EnterCPR
         switch (valg) {
             case 1:
@@ -269,7 +188,6 @@ void print_patient(const char *cpr_to_find) {
 
     // Delete the JSON object
     cJSON_Delete(json);
-
     //Free the memory for the buffer
     free(buffer);
 }

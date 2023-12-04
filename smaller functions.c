@@ -117,3 +117,14 @@ void liquidDosage(int unitChoice2) {
     }
     free(dosage);
 }
+
+void printMedicineDosage(cJSON *medicine, cJSON *dosage, int i, int *medicineCounter) {
+    if (cJSON_IsString(medicine) && (medicine->valuestring != NULL)) {
+        printf("Medicine%d: %s\n", i, medicine->valuestring);
+        (*medicineCounter)++;
+    }
+
+    if (cJSON_IsString(dosage) && (dosage->valuestring != NULL)) {
+        printf("Dosage%d: %s\n", i, dosage->valuestring);
+    }
+}

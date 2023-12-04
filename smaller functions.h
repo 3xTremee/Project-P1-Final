@@ -9,3 +9,4 @@ void check_buffer(char *buffer);
 void update_json(cJSON *json, FILE *outputFile);
 void weightBasedDosage();
 void liquidDosage(int unitChoice2);
+void printMedicineDosage(cJSON *medicine, cJSON *dosage, int i, int *medicineCounter);
