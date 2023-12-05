@@ -100,6 +100,7 @@ void print_patient(const char *cpr_to_find) {
                     scanf("%d", &valg);
                 }
 
+                if(valg>0){
                 FILE *outputFile = fopen("decrypted_output.json", "w");
                 check_file_opening(outputFile);
                 //For loop that runs the amount of times the user has entered in the previous scanf
@@ -119,7 +120,7 @@ void print_patient(const char *cpr_to_find) {
                 enncrypt_function_with_key();
                 cJSON_Delete(patient);
                 break;  // Exit the loop once the desired "CPR" is found
-            }
+            }}
         }
         //If the CPR number does not have information to print, the program prompts the user to reenter CPR.number
         // so we can insert an error message and run EnterCPR again
