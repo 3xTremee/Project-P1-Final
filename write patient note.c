@@ -1,6 +1,7 @@
 #include "write patient note.h"
+#include "smaller functions.h"
 
-char *getTimestamp();           //Returns time in 'Year/Month-Day Hour:Min:Sec' format
+//char *getTimestamp();           //Returns time in 'Year/Month-Day Hour:Min:Sec' format
 
 //logic:
 /*
@@ -16,21 +17,13 @@ void write_note(const char InputCPR[11]){
     // open the JSON file
     FILE *fp = fopen("patient_notes.json", "r");
     //If file read is empty, run error
-    if (fp == NULL) {
-        printf("Error: Unable to open read file.\n");
-        return;
-    }
+    check_file_opening(fp);
 
-    // Move the file pointer to the end of the file
-    fseek(fp, 0, SEEK_END);
-    // Get the current position, which is the size of the file
-    long file_size = ftell(fp);
-    // Move the file pointer back to the beginning of the file
-    fseek(fp, 0, SEEK_SET);
-
+    long file_size = size_of_file(fp);
 
     //create buffer
     char* buffer = (char *)malloc(file_size * 1);
+    check_buffer(buffer);
 
     int len = fread(buffer, 1, file_size, fp);
     buffer[len] = '\0'; // Null-terminate the buffer
@@ -89,7 +82,7 @@ void write_note(const char InputCPR[11]){
     scanf(" %[^\n]", Note);
 
     //Get current timestamp
-    char *timestamp = getTimestamp();
+    char *timestamp = getTimestamp(void);
 
     char PatientNote[120] = "";
 
@@ -129,10 +122,7 @@ void write_note(const char InputCPR[11]){
 
     // Open the file (using w only updates after program stopped, r+ can do it live for some reason)
     fp = fopen("patient_notes.json", "r+");
-    if (fp == NULL) {
-        printf("Error: Unable to open file for reading and writing.\n");
-        return;
-    }
+    check_file_opening(fopen);
 
     //when using r+ set file pointer to start of file, when writing to file it overwrites existing file
     fseek(fp, 0, SEEK_SET);
@@ -148,23 +138,5 @@ void write_note(const char InputCPR[11]){
     return;
 }
 
-char* getTimestamp() {
-    time_t RawTime;
-    struct tm *timestamp;
 
-    // Use time function to get current time
-    time(&RawTime);
-
-    //converts the 'RawTime' using localtime and stores it in 'timestamp'
-    timestamp = localtime(&RawTime);
-
-    // Create a char string to store the formatted timestamp
-    char *timestampString = (char *) malloc(36); // 36 because the timestamp is 35 characters long
-
-    // Use strftime to format the timestamp string
-    strftime(timestampString, 36, "\nDATE: %Y/%m-%d %X\nNOTE: ", timestamp);
-
-    // Return the formatted timestamp
-    return timestampString;
-}
 

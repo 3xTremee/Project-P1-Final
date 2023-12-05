@@ -128,3 +128,23 @@ void printMedicineDosage(cJSON *medicine, cJSON *dosage, int i, int *medicineCou
         printf("Dosage%d: %s\n", i, dosage->valuestring);
     }
 }
+
+char* getTimestamp() {
+    time_t RawTime;
+    struct tm *timestamp;
+
+    // Use time function to get current time
+    time(&RawTime);
+
+    //converts the 'RawTime' using localtime and stores it in 'timestamp'
+    timestamp = localtime(&RawTime);
+
+    // Create a char string to store the formatted timestamp
+    char *timestampString = (char *) malloc(36); // 36 because the timestamp is 35 characters long
+
+    // Use strftime to format the timestamp string
+    strftime(timestampString, 36, "\nDATE: %Y/%m-%d %X\nNOTE: ", timestamp);
+
+    // Return the formatted timestamp
+    return timestampString;
+}
