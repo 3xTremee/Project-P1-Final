@@ -82,7 +82,7 @@ void write_note(const char InputCPR[11]){
     scanf(" %[^\n]", Note);
 
     //Get current timestamp
-    char *timestamp = getTimestamp(void);
+    char *timestamp = getTimestamp();
 
     char PatientNote[120] = "";
 
