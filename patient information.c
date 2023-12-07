@@ -68,6 +68,8 @@ void print_patient(const char *cpr_to_find) {
                     printf("Diagnosis: %s\n", diagnosis->valuestring);
                 }
 
+
+
                 //Prints the medicine and dosage for the patient
                 for (int i = 1; i <= 8; i++) {
                     char medicineKey[15], dosageKey[15];
