@@ -94,33 +94,33 @@ void print_patient(const char *cpr_to_find) {
                 int valg = 0;
                 printf("\n\nHow many different medications have you administered?\n");
                 scanf("%d", &valg);
-                if (medicineCounter < valg) {
+                if(medicineCounter < valg){
                     printf("You have entered a number that is higher than the amount of medicine the patient can be given\n");
                     printf("Please enter a number between 0 and %d\n", medicineCounter);
                     scanf("%d", &valg);
                 }
 
-                if (valg>0) {
-                FILE *outputFile = fopen("decrypted_output.json", "w");
-                check_file_opening(outputFile);
-                //For loop that runs the amount of times the user has entered in the previous scanf
-                for (int j = 0; j < valg; ++j) {
-                    char medicine[100];
-                    printf("Please enter the medicine you have administered\n>");
-                    scanf("%s", medicine);
-                    medicine[0] = toupper(medicine[0]);
+                if(valg>0){
+                    FILE *outputFile = fopen("decrypted_output.json", "w");
+                    check_file_opening(outputFile);
+                    //For loop that runs the amount of times the user has entered in the previous scanf
+                    for (int j = 0; j < valg; ++j) {
+                        char medicine[100];
+                        printf("Please enter the medicine you have administered\n>");
+                        scanf("%s", medicine);
+                        medicine[0] = toupper(medicine[0]);
 
-                    //Adds a timestamp to the medicine
-                    addTimestampToField(patient, medicine);
-                    printf("Timestamp added to %s\n\n", medicine);
-                    update_json(json, outputFile);
-                }
+                        //Adds a timestamp to the medicine
+                        addTimestampToField(patient, medicine);
+                        printf("Timestamp added to %s\n\n", medicine);
+                        update_json(json, outputFile);
 
-                fclose(outputFile);
-                enncrypt_function_with_key();
-                cJSON_Delete(patient);
-                break;  // Exit the loop once the desired "CPR" is found
-            }
+                    }
+                    fclose(outputFile);
+                    enncrypt_function_with_key();
+                    cJSON_Delete(patient);
+                    break;  // Exit the loop once the desired "CPR" is found
+                }}
         }
         //If the CPR number does not have information to print, the program prompts the user to reenter CPR.number
         // so we can insert an error message and run EnterCPR again
@@ -149,10 +149,12 @@ void print_patient(const char *cpr_to_find) {
             break;
         } else if (NoteChoice == 'N' || NoteChoice == 'n') {
             break;
-        } else {
+        }
+        else {
             printf("You have not chosen a valid option. Please choose a valid option [Y/N].\n");
         }
     } while (NoteChoice != "Y" || NoteChoice != "N" || NoteChoice != "y" || NoteChoice != "n");
+
 
     int valg;
     printf("Do you want to find a new person or log out?\nType 1 for new person or 2 for log out\n>");
