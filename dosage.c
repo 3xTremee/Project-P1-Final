@@ -27,9 +27,7 @@ void dosageCalculator() {
         } else if (unitChoice2 == WEIGHT_BASED_DOSAGE) {
             weightBasedDosage();
         }
-
         // Free allocated dosage memory
         free(dosage);
-
     } while (unitChoice2 != WEIGHT_BASED_DOSAGE && unitChoice2 != LIQUID_DOSAGE);
 }

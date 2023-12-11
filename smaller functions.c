@@ -4,10 +4,11 @@
 
 // If it fails to open the file (e.g., due to a file not found), it prints an error message and returns from the function.
 void check_file_opening(FILE *fp) {
-if (fp == NULL) {
-printf("Error: Unable to open the file.\n");
-return;
-}}
+    if (fp == NULL) {
+        printf("Error: Unable to open the file.\n");
+        return;
+    }
+}
 
 long size_of_file(FILE *fp) {
 // Move the file pointer to the end of the file
@@ -18,21 +19,22 @@ long size_of_file(FILE *fp) {
 
 // Move the file pointer back to the beginning of the file
     fseek(fp, 0, SEEK_SET);
-
     return file_size;
 }
+
 // Dynamically allocate the buffer based on the file size
 void check_buffer(char *buffer) {
-if (buffer == NULL) {
-printf("Error: Unable to allocate memory.\n");
-return;
-}}
+    if (buffer == NULL) {
+        printf("Error: Unable to allocate memory.\n");
+        return;
+    }
+}
 
 void update_json(cJSON *json, FILE *outputFile) {
-char *updatedJsonText = cJSON_Print(json);
-fprintf(outputFile, "%s", updatedJsonText);
-fclose(outputFile);
-free(updatedJsonText);
+    char *updatedJsonText = cJSON_Print(json);
+    fprintf(outputFile, "%s", updatedJsonText);
+    fclose(outputFile);
+    free(updatedJsonText);
 }
 
 void weightBasedDosage() {

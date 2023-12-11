@@ -70,7 +70,7 @@ int gerateNumberKey() {
     return rand() % 10;
 }
 
-int enncrypt_function_with_key(){
+int enncrypt_function_with_key() {
     FILE *fp = fopen("decrypted_output.json", "r");
     can_file_open(fp);
     // Getting the file size
@@ -123,16 +123,15 @@ int enryptionAndDecryption(const char* file_name) {
     char *content = (char *) malloc(fileSize + 1);
     fread(content, 1, fileSize, fp);
     content[fileSize] = '\0';
-
     fclose(fp);
 
     // Decrypting
-   caesarDecrypt(content, storedWordKey, storedNumberKey);
+    caesarDecrypt(content, storedWordKey, storedNumberKey);
 
    //Writing the decrypted content to a new file
-   FILE *decryptedFile = fopen("decrypted_output.json", "w");
-  can_file_open(decryptedFile);
-  fprintf(decryptedFile, "%s", content);
+    FILE *decryptedFile = fopen("decrypted_output.json", "w");
+    can_file_open(decryptedFile);
+    fprintf(decryptedFile, "%s", content);
     fclose(decryptedFile);
 
     // Generating new keys
@@ -149,8 +148,8 @@ int enryptionAndDecryption(const char* file_name) {
     fclose(fp);
 
     // Deleting old keys after use
-     deleteKeyFile("word_key.txt");
-     deleteKeyFile("number_key.txt");
+    deleteKeyFile("word_key.txt");
+    deleteKeyFile("number_key.txt");
 
     // Writing the new keys to files
     writeKeyToFile("word_key.txt", newWordKey);

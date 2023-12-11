@@ -28,7 +28,6 @@ void EnterCPR() {
         printf("Invalid CPR-number\n");
         return EnterCPR();  // Re-enter CPR number
     }
-
     //Prints patient information
     print_patient(CPRnr);
 }

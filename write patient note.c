@@ -1,16 +1,7 @@
 #include "write patient note.h"
 #include "smaller functions.h"
 
-//char *getTimestamp();           //Returns time in 'Year/Month-Day Hour:Min:Sec' format
-
-//logic:
-/*
->open and parse file
->go through JSON to check if the CPR number is in it already, and which object it is (avoids having empty objects for patients w/o notes in file
->does one of two operations based on the return, [==0]: create new object with the item note, [!=0]: adds an item to exising object
-*/
-
-void write_note(const char InputCPR[11]){
+void write_note(const char InputCPR[11]) {
     //instead of using atof multiple times further down, simply creating a double with the atof of inputCPR to refer to instead
     double PatientCPR = atof(InputCPR);
 
@@ -61,7 +52,7 @@ void write_note(const char InputCPR[11]){
             cJSON *cpr = cJSON_GetObjectItemCaseSensitive(patient, "CPR");
 
             //check if the extracted "CPR" item == Input CPR
-            if (cJSON_IsNumber(cpr) && (cpr->valuedouble == PatientCPR)){
+            if (cJSON_IsNumber(cpr) && (cpr->valuedouble == PatientCPR)) {
                 //If they match, reflect TRUE and index in the variables
                 patient_in_system = 1;
                 patient_object = i;
@@ -69,11 +60,9 @@ void write_note(const char InputCPR[11]){
                 break;
             }
         }
-    } else{
+    } else {
         printf("Error: 'Patients' is not an array in the JSON.\n");
     }
-
-
 
     //Scan for patient note (limited to 100, may change if needed)
     char Note[100];
@@ -104,7 +93,7 @@ void write_note(const char InputCPR[11]){
         printf("Patient not already in file.\nCreating file for new patient.\nAdding note to patient file.\n");
 
     //if patient is in system, need only add new item to it
-    }else if (patient_in_system == 1) {
+    } else if (patient_in_system == 1) {
         //Finds the object from the array and the object index extracted from loop earlier
         cJSON *patient = cJSON_GetArrayItem(patients, patient_object);
         //Adds patient note to the existing object
@@ -113,9 +102,8 @@ void write_note(const char InputCPR[11]){
         printf("Adding note to patient file.\n");
     //If somehow neither is true, prints error message
     } else {
-        printf("ERROR: couldnt add note to file");
+        printf("ERROR: couldn't add note to file");
     }
-
 
     //Makes a string to put it in file
     char *json_str = cJSON_Print(json);
