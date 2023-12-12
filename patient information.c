@@ -92,7 +92,7 @@ void print_patient(const char *cpr_to_find) {
 
                 //Asks the user how many different medications they have administered
                 int valg = 0;
-                printf("\n\nHow many different medications have you administered?\n");
+                printf("\n\nHow many different medications have you administered?\n>");
                 scanf("%d", &valg);
                 if(medicineCounter < valg){
                     printf("You have entered a number that is higher than the amount of medicine the patient can be given\n");

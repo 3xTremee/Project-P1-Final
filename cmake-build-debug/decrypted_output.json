@@ -5,9 +5,9 @@
 			"Gender":	"Male",
 			"CPR":	308031234,
 			"Diagnosis":	"Asthma, Hay fever",
-			"Medicine1":	"Berodual : Time of administration: Thu Nov 30 14:34:42 2023 : Time of administration: Thu Nov 30 14:35:49 2023 : Time of administration: Thu Nov 30 14:36:53 2023 : Time of administration: Thu Nov 30 14:39:48 2023 : Time of administration: Thu Nov 30 14:42:57 2023",
+			"Medicine1":	"Berodual : Time of administration: Tue Dec 12 12:00:48 2023",
 			"Dosage1":	"2 mL as required in form of 1 inhalation. Severe cases up to 4 mL.",
-			"Medicine2":	"Opatanol : Time of administration: Thu Nov 30 14:45:14 2023",
+			"Medicine2":	"Opatanol",
 			"Dosage2":	"1 drop in each eye morning and night."
 		}, {
 			"Name":	"Lasse Binderup",
@@ -31,7 +31,7 @@
 			"Gender":	"Male",
 			"CPR":	304991234,
 			"Diagnosis":	"Hay fever, Type 1 diabetes",
-			"Medicine1":	"Opatanol : Time of administration: Thu Nov 30 14:44:33 2023",
+			"Medicine1":	"Opatanol",
 			"Dosage1":	"1mg/mL. 1 drop in each eye morning and night.",
 			"Medicine2":	"Insulin",
 			"Dosage2":	"40 units per day. More if needed. Check blood sugar levels."
