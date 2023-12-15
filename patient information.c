@@ -2,6 +2,11 @@
 #include "write patient note.h"
 #include "encryption.h"
 
+/**
+ * @brief This function is used to enter a CPR number and print the patient information
+ *
+ */
+
 void print_patient(const char *cpr_to_find) {
     // This code attempts to open the file "users.json" for reading.
     // If it fails to open the file (e.g., due to a file not found), it prints an error message and returns from the function.
@@ -137,7 +142,7 @@ void print_patient(const char *cpr_to_find) {
     for (int t = 0; t < 2; t++) {
         printf("\n");
     }
-
+    //Asks the user if they want to add a note to the patient file
     char NoteChoice;
     printf("Do you want to add a note to the patient file? [Y/N]\n>");
 

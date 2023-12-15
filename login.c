@@ -1,6 +1,8 @@
 #include "login.h"
-
-
+/**
+ * This function is used to login to the system.
+ * @return 1 if login is successful, 0 if login is unsuccessful, -1 if there is an error.
+ */
 int login() {
     FILE *fileptr;
     char *buffer;

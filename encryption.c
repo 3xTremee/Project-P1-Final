@@ -2,7 +2,13 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+/**
+ * This function is used to encrypt and decrypt the pass.json file.
+ * @param file_name The name of the file to be encrypted/decrypted.
+ * @return 0 if the encryption/decryption is successful, -1 if there is an error.
+ */
 
+// If it fails to open the file (e.g., due to a file not found), it prints an error message and exits the program.
 void can_file_open(FILE *fp) {
     if (fp == NULL) {
         printf("File cannot be opened\n");
@@ -10,6 +16,7 @@ void can_file_open(FILE *fp) {
     }
 }
 
+// Writes the key to a file
 void writeKeyToFile(const char *fileName, int key) {
     FILE *fp = fopen(fileName, "w");
     can_file_open(fp);
@@ -17,6 +24,7 @@ void writeKeyToFile(const char *fileName, int key) {
     fclose(fp);
 }
 
+// Reads the key from a file
 int readKeyFromFile(const char *fileName) {
     FILE *fp = fopen(fileName, "r");
     if (fp == NULL) {
@@ -29,10 +37,12 @@ int readKeyFromFile(const char *fileName) {
     return key;
 }
 
+// Deletes the key file
 void deleteKeyFile(const char *fileName) {
     remove(fileName);
 }
 
+// Checks if the key file exists
 int keyExists(const char *fileName) {
     FILE *fp = fopen(fileName, "r");
     if (fp == NULL) {
@@ -42,6 +52,7 @@ int keyExists(const char *fileName) {
     return 1; // File exists
 }
 
+// Encrypts the string using the caesar cipher
 void caesarEncrypt(char *str, int key, int keynumber) {
     int i = 0;
     while (str[i] != '\0') {
@@ -56,20 +67,24 @@ void caesarEncrypt(char *str, int key, int keynumber) {
     }
 }
 
+// Decrypts the string using the caesar cipher
 void caesarDecrypt(char *str, int key, int numberkey) {
     caesarEncrypt(str, 26 - key, 10 - numberkey);
 }
 
+// Generates a random key
 int generateKey() {
     srand(time(NULL));
     return rand() % 26;
 }
 
+// Generates a random number key
 int gerateNumberKey() {
     srand(time(NULL));
     return rand() % 10;
 }
 
+// Encrypts the users.json file
 int enncrypt_function_with_key() {
     FILE *fp = fopen("decrypted_output.json", "r");
     can_file_open(fp);
@@ -93,6 +108,7 @@ int enncrypt_function_with_key() {
     free(content);
 }
 
+// Decrypts the users.json file and makes copy of it
 int enryptionAndDecryption(const char* file_name) {
     // Check if word key exists
     if (!keyExists("word_key.txt")) {

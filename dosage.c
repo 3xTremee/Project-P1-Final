@@ -5,7 +5,10 @@
 
 #define LIQUID_DOSAGE 2
 #define WEIGHT_BASED_DOSAGE 1
-
+/**
+ * @brief This function is used to calculate the dosage of a medicine based on the patient's weight
+ *
+ */
 void dosageCalculator() {
     int unitChoice2;
     double* dosage = (double*)malloc(sizeof(double));

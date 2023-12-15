@@ -1,7 +1,10 @@
 #include "smaller functions.h"
 #define LIQUID_DOSAGE 2
 #define WEIGHT_BASED_DOSAGE 1
-
+/**
+ * @brief This file contains smaller functions that are used in other files
+ *
+ */
 // If it fails to open the file (e.g., due to a file not found), it prints an error message and returns from the function.
 void check_file_opening(FILE *fp) {
     if (fp == NULL) {
@@ -30,12 +33,14 @@ void check_buffer(char *buffer) {
     }
 }
 
+// If it fails to parse the JSON, it prints an error message and returns from the function.
 void update_json(cJSON *json, FILE *outputFile) {
     char *updatedJsonText = cJSON_Print(json);
     fprintf(outputFile, "%s", updatedJsonText);
     fclose(outputFile);
     free(updatedJsonText);
 }
+
 
 void weightBasedDosage() {
     double* dosage = (double*)malloc(sizeof(double));
@@ -81,7 +86,7 @@ void weightBasedDosage() {
     }
     free(dosage);
 }
-
+// If the user chooses liquid dosage, it asks for the medicine concentration and the dosage, and then calculates the liquid dosage.
 void liquidDosage(int unitChoice2) {
     double* dosage = (double*)malloc(sizeof(double));
     double liquidDose, concentration;
@@ -119,7 +124,7 @@ void liquidDosage(int unitChoice2) {
     }
     free(dosage);
 }
-
+// If the user chooses weight-based dosage, it asks for the patient's weight, the medicine dosage per kg, and the maximum allowable dosage, and then calculates the weight-based dosage.
 void printMedicineDosage(cJSON *medicine, cJSON *dosage, int i, int *medicineCounter) {
     if (cJSON_IsString(medicine) && (medicine->valuestring != NULL)) {
         printf("Medicine%d: %s\n", i, medicine->valuestring);
@@ -130,6 +135,7 @@ void printMedicineDosage(cJSON *medicine, cJSON *dosage, int i, int *medicineCou
         printf("Dosage%d: %s\n", i, dosage->valuestring);
     }
 }
+
 
 char* getTimestamp() {
     time_t RawTime;

@@ -1,5 +1,10 @@
 #include "timestamp.h"
-
+/**
+ * @brief This function is used to add a timestamp to a field in a JSON object
+ *
+ * @param userObject The JSON object to add the timestamp to
+ * @param fieldName The name of the field to add the timestamp to
+ */
 // Function to add timestamp to an arbitrary field in a JSON object
 void addTimestampToField(cJSON *userObject, const char *fieldName) {
     // Locate the specified field in the cJSON object

@@ -1,6 +1,9 @@
 #include "write patient note.h"
 #include "smaller functions.h"
-
+/**
+ * @brief This function is used to write a note to a patient's file
+ *
+ */
 void write_note(const char InputCPR[11]) {
     //instead of using atof multiple times further down, simply creating a double with the atof of inputCPR to refer to instead
     double PatientCPR = atof(InputCPR);

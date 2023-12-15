@@ -1,6 +1,9 @@
 #include "cpr.h"
 #include "patient information.h"
-
+/**
+ * @brief This function is used to enter a CPR number and print the patient information
+ *
+ */
 void EnterCPR() {
     char CPRnr[11];  // Make room for 10 digits and the null terminator
 
